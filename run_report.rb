@@ -381,8 +381,8 @@ rescue ArgumentError, TypeError
   "—"
 end
 
-def build_top5_json(reels_viral_sorted, followers)
-  reels_viral_sorted.first(5).map.with_index do |p, i|
+def build_top5_json(reels_sorted_by_views, followers)
+  reels_sorted_by_views.first(5).map.with_index do |p, i|
     eng = aggregate_engagement(p)
     lbl = (p[:media_product_type] || p[:media_type] || "VIDEO").to_s
     {
@@ -402,8 +402,8 @@ def build_top5_json(reels_viral_sorted, followers)
   end
 end
 
-def build_reels_grid_html(reels_viral_sorted, followers)
-  reels_viral_sorted.map do |p|
+def build_reels_grid_html(reels_sorted_by_views, followers)
+  reels_sorted_by_views.map do |p|
     er_r = post_er_vs_reach(p)
     er_f = post_er_vs_followers(p, followers)
     er_show = if er_r
@@ -559,7 +559,7 @@ def build_sidebar_formulas_html(has_reach:, has_followers_daily:, has_demographi
   parts << "<dt>Engagement rate vs followers</dt><dd>Total interactions ÷ follower count × 100 — common for comparing accounts of different sizes.</dd>"
   parts << "<dt>Engagement rate vs reach</dt><dd>Total interactions ÷ reach × 100 — preferred when reach is available (closer to ad/organic delivery).</dd>" if has_reach
   parts << "<dt>Sample engagement rate</dt><dd>Sum of interactions in this sample ÷ number of posts ÷ followers × 100 (headline KPI).</dd>"
-  parts << "<dt>Viral sort</dt><dd>Reels ordered by: plays/views (when available), then weighted likes, comments, saves, shares.</dd>"
+  parts << "<dt>Top 5 by views</dt><dd>Top 5 uses reels from a wide account fetch, ranked by <strong>plays/views only</strong> (not engagement). KPI numbers use your most recent posts only (see report footnote).</dd>"
   parts << "<dt>Avg new followers / day</dt><dd>From daily follower snapshots when Meta returns them.</dd>" if has_followers_daily
   parts << "<dt>Audience breakdown</dt><dd>When Instagram provides audience insights.</dd>" if has_demographics
   "<dl>#{parts.join}</dl>"
@@ -574,6 +574,17 @@ def aggregate_engagement(p)
   return p[:engagement_total] unless p[:engagement_total].nil?
 
   p[:likes] + p[:comments] + p[:saves] + p[:shares]
+end
+
+def post_timestamp(p)
+  Time.parse(p[:timestamp].to_s)
+rescue ArgumentError, TypeError
+  Time.at(0)
+end
+
+# Top 5: strictly by plays/views (highest first). Ties: stable id.
+def sort_reels_by_views_only(reels)
+  reels.sort_by { |p| [-(p[:video_views] || 0).to_i, p[:post_id].to_s] }
 end
 
 def compute_rates(_username, followers, _period_label, posts, _source_note)
@@ -670,8 +681,27 @@ token = ENV["INSTAGRAM_ACCESS_TOKEN"].to_s.strip
 uid = ENV["INSTAGRAM_USER_ID"].to_s.strip
 version = (ENV["INSTAGRAM_GRAPH_VERSION"] || "v21.0").strip
 version = "v21.0" if version.empty?
-max_posts = (ENV["MAX_POSTS"] || "50").to_i
-max_posts = 50 if max_posts < 1
+# How many media items to pull from the account (paginated). Higher = Top 5 reflects true hits (e.g. 5M+ views).
+# Default 500 when unset. If only legacy MAX_POSTS is set, that value is used.
+max_media_fetch = if !ENV["MAX_MEDIA_FETCH"].to_s.strip.empty?
+                      ENV["MAX_MEDIA_FETCH"].to_i
+                    elsif !ENV["MAX_POSTS"].to_s.strip.empty?
+                      ENV["MAX_POSTS"].to_i
+                    else
+                      500
+                    end
+max_media_fetch = 500 if max_media_fetch < 1
+max_media_fetch = 5000 if max_media_fetch > 5000
+# Recent posts used for KPI + table rows (keeps rates meaningful).
+kpi_sample = (ENV["KPI_SAMPLE_POSTS"] || "50").to_i
+kpi_sample = 50 if kpi_sample < 1
+kpi_sample = 500 if kpi_sample > 500
+table_posts_n = (ENV["TABLE_POSTS"] || "50").to_i
+table_posts_n = 50 if table_posts_n < 1
+table_posts_n = 500 if table_posts_n > 500
+reels_grid_n = (ENV["REELS_GRID_LIMIT"] || "50").to_i
+reels_grid_n = 50 if reels_grid_n < 1
+reels_grid_n = 200 if reels_grid_n > 200
 insight_delay = (ENV["INSIGHT_DELAY"] || "0.12").to_f
 insight_delay = 0.12 if insight_delay.negative?
 
@@ -681,13 +711,15 @@ if token.empty? || uid.empty?
 end
 
 user = fetch_graph_api_user(uid, token, version)
-posts, meta, = fetch_graph_api_media_with_insights(uid, token, max_posts, version, insight_delay)
+posts, meta, = fetch_graph_api_media_with_insights(uid, token, max_media_fetch, version, insight_delay)
 
 username = user["username"] || "unknown"
 display_name = user["name"].to_s
 followers = (user["followers_count"] || 0).to_i
 
-rates = compute_rates(username, followers, "", posts, "")
+posts_recent_first = posts.sort_by { |p| post_timestamp(p) }.reverse
+kpi_subset = posts_recent_first.first([kpi_sample, posts.length].min)
+rates = compute_rates(username, followers, "", kpi_subset, "")
 
 follower_raw = fetch_ig_insights(uid, token, version,
                                  "metric" => "follower_count", "period" => "day", "metric_type" => "total_value")
@@ -697,8 +729,9 @@ demographics_html = build_demographics_html(uid, token, version)
 has_demo = !demographics_html.strip.empty?
 
 rv = posts.select { |p| video_or_reel?(p) }
-reels_viral = rv.sort_by { |p| [-viral_score(p), -p[:likes].to_i] }
-posts_sorted = posts.sort_by { |p| [-viral_score(p), -p[:likes].to_i] }
+reels_by_views = sort_reels_by_views_only(rv)
+table_subset = posts_recent_first.first([table_posts_n, posts.length].min)
+posts_sorted = table_subset.sort_by { |p| [-(p[:video_views] || 0).to_i, -viral_score(p)] }
 
 avg_likes = rv.empty? ? 0 : (rv.sum { |p| p[:likes] }.to_f / rv.length).round
 avg_comments = rv.empty? ? 0 : (rv.sum { |p| p[:comments] }.to_f / rv.length).round
@@ -712,13 +745,14 @@ reel_stats = {
   show_plays: show_plays
 }
 
-top5 = build_top5_json(reels_viral, followers)
-reels_grid_html = if reels_viral.empty?
+top5 = build_top5_json(reels_by_views, followers)
+reels_for_grid = reels_by_views.first([reels_grid_n, reels_by_views.length].min)
+reels_grid_html = if reels_for_grid.empty?
                     '<p class="reels-empty">No Reels or videos in this sample.</p>'
                   else
-                    build_reels_grid_html(reels_viral, followers)
+                    build_reels_grid_html(reels_for_grid, followers)
                   end
-sample_calc_html = build_sample_calculation_html(reels_viral.first || posts_sorted.first, followers)
+sample_calc_html = build_sample_calculation_html(reels_by_views.first || posts_sorted.first, followers)
 
 include_reach = posts.any? { |p| !p[:reach].nil? }
 include_imp = posts.any? { |p| !p[:impressions].nil? }
@@ -737,8 +771,9 @@ sidebar_formulas = build_sidebar_formulas_html(
   has_demographics: has_demo
 )
 
-period_label = "Last #{posts.length} posts from your account · reels sorted by virality (views + engagement). " \
-               "API: #{meta['fields_used']}; media=#{meta['media_returned']}; insight backfill=#{meta['insight_backfill_calls']}."
+period_label = "Fetched #{posts.length} media items for ranking · Top 5 reels = highest views on account (from this fetch). " \
+               "Headline KPIs use your #{kpi_subset.length} most recent posts. Table shows #{table_subset.length} most recent. " \
+               "API: #{meta['fields_used']}; media=#{meta['media_returned']}; insight backfill=#{meta['insight_backfill_calls']}; views backfill=#{meta['views_backfill_calls']}."
 
 html = build_dashboard_html(
   username, display_name, followers, period_label, rates, top5,

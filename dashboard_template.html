@@ -479,14 +479,14 @@
 
       {{SAMPLE_CALC_HTML}}
 
-      <h2 class="section-title">Latest reels (viral order)</h2>
-      <p style="margin:-0.5rem 0 1rem;color:var(--nf-muted);font-size:0.88rem;">Sorted by plays/views and weighted engagement (likes, comments, saves, shares). Dates in UTC.</p>
+      <h2 class="section-title">Latest reels (by views)</h2>
+      <p style="margin:-0.5rem 0 1rem;color:var(--nf-muted);font-size:0.88rem;">Highest plays/views first; ties use total interactions. Dates in UTC.</p>
       <div class="reels-grid">{{REELS_GRID_HTML}}</div>
 
       <h2 class="section-title">Top reels &amp; videos</h2>
       <div class="top5-bar">
-        <label for="top5sel">Top 5 by virality</label>
-        <select id="top5sel" aria-label="Top 5 reels by virality"></select>
+        <label for="top5sel">Top 5 by views</label>
+        <select id="top5sel" aria-label="Top 5 reels by plays or views"></select>
       </div>
       <div class="top5-card" id="top5detail">
         <img id="top5img" src="" alt="" />
@@ -501,8 +501,8 @@
 
       {{AUDIENCE_SECTION}}
 
-      <h2 class="section-title">All posts in sample</h2>
-      <p style="margin:-0.5rem 0 1rem;color:var(--nf-muted);font-size:0.88rem;">Same viral ordering as reels where applicable.</p>
+      <h2 class="section-title">Recent posts (table)</h2>
+      <p style="margin:-0.5rem 0 1rem;color:var(--nf-muted);font-size:0.88rem;">Most recent posts in the sample; order is by views then engagement. Top 5 above uses account-wide fetch by views.</p>
       <div style="overflow-x:auto;">
         <table>
           <thead>{{TABLE_HEADER_ROW}}</thead>
