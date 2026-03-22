@@ -1,0 +1,18 @@
+{
+  "profile": {
+    "username": "doggo_pokko",
+    "display_name": "Doggo Pokko",
+    "followers": 5000,
+    "period_label": "Last 30 days"
+  },
+  "posts": [
+    {
+      "post_id": "example_1",
+      "likes": 120,
+      "comments": 8,
+      "saves": 5,
+      "shares": 2,
+      "reach": 1500
+    }
+  ]
+}

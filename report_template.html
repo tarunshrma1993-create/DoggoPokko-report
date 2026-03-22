@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --card: #1a2332;
+      --text: #e8eef5;
+      --muted: #8b9cb3;
+      --accent: #6c9eff;
+      --border: #2a3647;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(ellipse 120% 80% at 50% -20%, #1e3a5f 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem 1rem 3rem;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; font-weight: 600; margin: 0 0 0.25rem; }
+    .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+    .card label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .card .val { font-size: 1.5rem; font-weight: 600; color: var(--accent); }
+    .card .hint { font-size: 0.8rem; color: var(--muted); margin-top: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th, td { padding: 0.65rem 0.85rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #141c28; color: var(--muted); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    tr:last-child td { border-bottom: none; }
+    .footnote { margin-top: 1.25rem; font-size: 0.85rem; color: var(--muted); }
+    .badge { display: inline-block; background: #243044; color: var(--accent); padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.75rem; margin-left: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>{{DISPLAY_NAME}} <span class="badge">@{{USERNAME}}</span></h1>
+    <p class="sub">Period: {{PERIOD}} · Followers: {{FOLLOWERS}} · Source: {{SOURCE_NOTE}}</p>
+
+    <div class="grid">
+      <div class="card">
+        <label>Engagement rate (by followers)</label>
+        <div class="val">{{RATE_FOLLOWERS}}</div>
+        <div class="hint">Avg engagements per post ÷ followers × 100</div>
+      </div>
+      <div class="card">
+        <label>Engagement rate (by reach)</label>
+        <div class="val">{{RATE_REACH}}</div>
+        <div class="hint">Total engagements ÷ total reach × 100 (needs reach per post)</div>
+      </div>
+      <div class="card">
+        <label>Avg engagement / post</label>
+        <div class="val">{{AVG_ENG}}</div>
+        <div class="hint">Uses Graph API <code>engagement</code> / <code>total_interactions</code> when present; else sum of interactions</div>
+      </div>
+      <div class="card">
+        <label>Posts in sample</label>
+        <div class="val">{{POST_COUNT}}</div>
+        <div class="hint">Total engagements: {{TOTAL_ENG}} · Avg reach: {{AVG_REACH}}</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Post</th>
+          <th>Likes</th>
+          <th>Comments</th>
+          <th>Saves</th>
+          <th>Shares</th>
+          <th>Reach</th>
+          <th>Impressions</th>
+          <th>Total eng.</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ROWS}}
+      </tbody>
+    </table>
+
+    <p class="footnote">Generated {{GENERATED_AT}}. Engagement formulas are common industry definitions; align with your internal reporting if needed.</p>
+  </div>
+</body>
+</html>

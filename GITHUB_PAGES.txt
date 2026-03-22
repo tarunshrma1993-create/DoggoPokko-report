@@ -1,0 +1,55 @@
+GitHub Pages — host your engagement report for free
+=====================================================
+
+ONE-TIME SETUP
+--------------
+1) Create a GitHub account: https://github.com/signup
+2) Create a new repository (any name, e.g. doggopokko-report). Leave "Add README" optional.
+3) On your Mac you need Git. If `git` is not installed, install Apple’s tools:
+     Open Terminal and run:   xcode-select --install
+   (Or install "GitHub Desktop" from https://desktop.github.com/ and use that to push.)
+4) In this project folder, run the commands in "FIRST PUSH" below.
+
+EVERY TIME YOU UPDATE THE REPORT
+--------------------------------
+  cd ~/Desktop/DoggoPokko
+  ruby run_report.rb
+  ./package_for_site.sh
+  ./sync_github_pages.sh
+  git add docs && git commit -m "Update report" && git push
+
+TURN ON GITHUB PAGES
+--------------------
+1) Open your repo on GitHub → Settings → Pages (left sidebar).
+2) Under "Build and deployment" → Source: Deploy from a branch.
+3) Branch: main  →  Folder: /docs  →  Save.
+4) After 1–2 minutes your site will be at:
+     https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/
+
+USE YOUR OWN DOMAIN (doggopokko.com)
+------------------------------------
+1) In the same Pages settings, under "Custom domain", enter: doggopokko.com
+2) GitHub will show DNS records to add.
+3) In GoDaddy → your domain → DNS:
+   - Often you add the A records for GitHub (apex) and/or CNAME for www.
+   - Exact values: follow GitHub’s instructions on that screen.
+4) Wait for DNS (can be up to 48 hours; often much faster).
+5) Enable "Enforce HTTPS" in GitHub Pages when DNS is verified.
+
+FIRST PUSH (Terminal)
+---------------------
+  cd ~/Desktop/DoggoPokko
+  git init
+  git add .
+  git status          (check that .env does NOT appear — it must stay private)
+  git commit -m "Initial site for GitHub Pages"
+  git branch -M main
+  git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
+  git push -u origin main
+
+Replace YOUR-USERNAME and YOUR-REPO with your GitHub username and repository name.
+If GitHub asks for a password, use a Personal Access Token (GitHub → Settings → Developer settings → Tokens).
+
+IMPORTANT
+---------
+- Never commit your .env file (it is in .gitignore). Tokens stay on your computer only.

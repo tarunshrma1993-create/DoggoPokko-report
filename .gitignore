@@ -1,0 +1,10 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Optional: generated reports (uncomment if you do not want them in git)
+# engagement_report.html
+
+# Local deploy bundle for hosting (doggopokko.com / GoDaddy public_html)
+dist/

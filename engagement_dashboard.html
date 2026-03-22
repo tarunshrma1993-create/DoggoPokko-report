@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instagram engagement — doggo_pokko</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --card: #1a2332;
+      --text: #e8eef5;
+      --muted: #8b9cb3;
+      --accent: #6c9eff;
+      --border: #2a3647;
+      --ok: #5ecf8a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(ellipse 120% 80% at 50% -20%, #1e3a5f 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem 1rem 3rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 1.6rem; font-weight: 600; margin: 0 0 0.5rem; }
+    .lead { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.25rem; max-width: 52ch; }
+    label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 0.35rem; }
+    input, textarea, button {
+      font: inherit;
+      color: var(--text);
+      background: #141c28;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+    }
+    input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    textarea { width: 100%; min-height: 120px; resize: vertical; font-family: ui-monospace, monospace; font-size: 0.85rem; }
+    .row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1rem; }
+    .row > div { flex: 1; min-width: 140px; }
+    .btn {
+      cursor: pointer;
+      background: linear-gradient(180deg, #3d5a8a 0%, #2a4570 100%);
+      border-color: #4a6fa5;
+      font-weight: 500;
+    }
+    .btn:hover { filter: brightness(1.08); }
+    .btn-secondary { background: #243044; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+    .card .val { font-size: 1.45rem; font-weight: 600; color: var(--accent); }
+    .card .hint { font-size: 0.8rem; color: var(--muted); margin-top: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #141c28; color: var(--muted); font-weight: 500; font-size: 0.72rem; text-transform: uppercase; }
+    tr:last-child td { border-bottom: none; }
+    .note { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; }
+    .ok { color: var(--ok); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Engagement calculator</h1>
+    <p class="lead">
+      Enter metrics from <strong>Instagram Insights</strong> (or your spreadsheet). Nothing is uploaded;
+      everything runs in your browser. For <a href="https://www.instagram.com/doggo_pokko" style="color:var(--accent)">@doggo_pokko</a>, use the same numbers you see in the app.
+    </p>
+
+    <div class="row">
+      <div>
+        <label for="username">Username</label>
+        <input id="username" type="text" value="doggo_pokko" />
+      </div>
+      <div>
+        <label for="followers">Followers</label>
+        <input id="followers" type="number" min="0" placeholder="e.g. 5000" />
+      </div>
+      <div>
+        <label for="period">Period label</label>
+        <input id="period" type="text" placeholder="Last 30 days" />
+      </div>
+    </div>
+
+    <label for="csv">Paste CSV (header row required)</label>
+    <textarea id="csv" spellcheck="false">post_id,likes,comments,saves,shares,reach
+1,120,8,5,2,1500
+2,95,12,3,1,1200
+3,200,20,10,4,2100</textarea>
+    <p class="row" style="align-items:center">
+      <button type="button" class="btn" id="calc">Calculate</button>
+      <button type="button" class="btn btn-secondary" id="sample">Load sample</button>
+      <span class="note" style="margin:0">Columns: <code style="color:var(--accent)">post_id, likes, comments, saves, shares, reach</code> — reach optional</span>
+    </p>
+
+    <div class="grid" id="summary" style="display:none">
+      <div class="card">
+        <label>Engagement rate (by followers)</label>
+        <div class="val" id="rateFollowers">—</div>
+        <div class="hint">Avg engagements per post ÷ followers × 100</div>
+      </div>
+      <div class="card">
+        <label>Engagement rate (by reach)</label>
+        <div class="val" id="rateReach">—</div>
+        <div class="hint">Total engagements ÷ total reach × 100</div>
+      </div>
+      <div class="card">
+        <label>Avg engagement / post</label>
+        <div class="val" id="avgEng">—</div>
+        <div class="hint">Likes + comments + saves + shares</div>
+      </div>
+      <div class="card">
+        <label>Posts</label>
+        <div class="val" id="postCount">—</div>
+        <div class="hint" id="totalsHint"></div>
+      </div>
+    </div>
+
+    <div id="tableWrap" style="display:none; margin-top:1rem;">
+      <table>
+        <thead>
+          <tr>
+            <th>Post</th><th>Likes</th><th>Comments</th><th>Saves</th><th>Shares</th><th>Reach</th><th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      <span class="ok">Privacy:</span> Data stays on your device. For live Meta Graph API data (reach, engagement, impressions,
+      saves), run <code style="color:var(--muted)">engagement_tool.py --api</code> with
+      <code style="color:var(--muted)">INSTAGRAM_ACCESS_TOKEN</code> and
+      <code style="color:var(--muted)">INSTAGRAM_USER_ID</code> — requires a
+      <a href="https://developers.facebook.com/docs/instagram-platform" style="color:var(--accent)">Meta app</a>
+      with <code style="color:var(--muted)">instagram_basic</code> and <code style="color:var(--muted)">instagram_manage_insights</code>,
+      and an Instagram Business or Creator account linked to a Facebook Page.
+    </p>
+  </div>
+  <script>
+    function parseCSV(text) {
+      const lines = text.trim().split(/\r?\n/).filter(Boolean);
+      if (lines.length < 2) throw new Error("Need a header row and at least one data row.");
+      const header = lines[0].split(",").map((h) => h.trim().toLowerCase());
+      const idx = (name) => {
+        const a = header.indexOf(name);
+        const b = header.indexOf(name.replace("_", ""));
+        return a >= 0 ? a : b;
+      };
+      const posts = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(",").map((c) => c.trim());
+        const pid = cols[idx("post_id")] || String(i);
+        const num = (k) => {
+          const j = idx(k);
+          if (j < 0 || !cols[j]) return 0;
+          const v = parseInt(cols[j], 10);
+          return Number.isFinite(v) ? v : 0;
+        };
+        const rj = idx("reach");
+        let reach = null;
+        if (rj >= 0 && cols[rj] !== "") {
+          const r = parseInt(cols[rj], 10);
+          reach = Number.isFinite(r) && r > 0 ? r : null;
+        }
+        posts.push({
+          post_id: pid,
+          likes: num("likes"),
+          comments: num("comments"),
+          saves: num("saves"),
+          shares: num("shares"),
+          reach,
+        });
+      }
+      return posts;
+    }
+
+    function eng(p) {
+      return p.likes + p.comments + p.saves + p.shares;
+    }
+
+    function compute(followers, posts) {
+      const n = posts.length;
+      if (!n) return null;
+      const totalEng = posts.reduce((s, p) => s + eng(p), 0);
+      const avgEng = totalEng / n;
+      const withReach = posts.filter((p) => p.reach != null);
+      let rateReach = null;
+      let avgReach = null;
+      if (withReach.length) {
+        const tr = withReach.reduce((s, p) => s + p.reach, 0);
+        avgReach = tr / withReach.length;
+        if (tr > 0) rateReach = (totalEng / tr) * 100;
+      }
+      let rateFollowers = null;
+      if (followers > 0) rateFollowers = (avgEng / followers) * 100;
+      return {
+        post_count: n,
+        total_engagements: totalEng,
+        avg_engagement_per_post: Math.round(avgEng * 100) / 100,
+        rate_by_followers_pct: rateFollowers != null ? Math.round(rateFollowers * 1000) / 1000 : null,
+        rate_by_reach_pct: rateReach != null ? Math.round(rateReach * 1000) / 1000 : null,
+        avg_reach: avgReach != null ? Math.round(avgReach * 10) / 10 : null,
+      };
+    }
+
+    function fmtPct(v) {
+      if (v == null) return "— (add followers or reach)";
+      return v + "%";
+    }
+
+    function render(posts, stats) {
+      document.getElementById("summary").style.display = "grid";
+      document.getElementById("tableWrap").style.display = "block";
+      document.getElementById("rateFollowers").textContent = fmtPct(stats.rate_by_followers_pct);
+      document.getElementById("rateReach").textContent = fmtPct(stats.rate_by_reach_pct);
+      document.getElementById("avgEng").textContent = String(stats.avg_engagement_per_post);
+      document.getElementById("postCount").textContent = String(stats.post_count);
+      document.getElementById("totalsHint").textContent =
+        "Total engagements: " + stats.total_engagements + (stats.avg_reach != null ? " · Avg reach: " + stats.avg_reach : "");
+      const tb = document.getElementById("tbody");
+      tb.innerHTML = "";
+      posts.forEach((p) => {
+        const tr = document.createElement("tr");
+        const e = eng(p);
+        const cells = [p.post_id, p.likes, p.comments, p.saves, p.shares, p.reach != null ? p.reach : "—", e];
+        cells.forEach((c) => {
+          const td = document.createElement("td");
+          td.textContent = String(c);
+          tr.appendChild(td);
+        });
+        tb.appendChild(tr);
+      });
+    }
+
+    document.getElementById("calc").addEventListener("click", () => {
+      const followers = parseInt(document.getElementById("followers").value, 10) || 0;
+      let posts;
+      try {
+        posts = parseCSV(document.getElementById("csv").value);
+      } catch (e) {
+        alert(e.message || String(e));
+        return;
+      }
+      const stats = compute(followers, posts);
+      if (!stats) {
+        alert("No posts parsed.");
+        return;
+      }
+      render(posts, stats);
+    });
+
+    document.getElementById("sample").addEventListener("click", () => {
+      document.getElementById("csv").value = `post_id,likes,comments,saves,shares,reach
+1,120,8,5,2,1500
+2,95,12,3,1,1200
+3,200,20,10,4,2100`;
+      document.getElementById("followers").value = "5000";
+      document.getElementById("period").value = "Sample";
+    });
+  </script>
+</body>
+</html>
