@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Copy packaged site (dist/) into docs/ for GitHub Pages + add .nojekyll
+# Replaces only index.html + assets/ so docs/CNAME and other files are kept.
 # GitHub Pages: Settings → Pages → Build from branch → main → /docs
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -11,11 +12,11 @@ if [[ ! -f "$DIST/index.html" ]]; then
   exit 1
 fi
 
-rm -rf "$DOCS"
 mkdir -p "$DOCS"
-cp -R "$DIST"/* "$DOCS/"
-# Stops GitHub from running Jekyll (avoids broken static sites)
+rm -rf "$DOCS/assets"
+cp -f "$DIST/index.html" "$DOCS/index.html"
+cp -R "$DIST/assets" "$DOCS/assets"
 touch "$DOCS/.nojekyll"
 
-echo "OK: site copied to docs/"
-echo "Next: push to GitHub and enable Pages (branch main, folder /docs). See GITHUB_PAGES.txt"
+echo "OK: site copied to docs/ (CNAME and other files in docs/ were preserved)"
+echo "Next: push to GitHub. See GITHUB_PAGES.txt"
