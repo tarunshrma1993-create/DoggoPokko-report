@@ -1,1430 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Doggo Pokko — @doggo_pokko</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doggo Pokko | Official Website</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --nf-black: #141414;
-      --nf-card: #181818;
-      --nf-card-hover: #242424;
-      --nf-red: #e50914;
-      --nf-text: #f5f5f4;
-      --nf-muted: #a8a29e;
-      --nf-border: #292524;
-      --dog-cream: #fef3c7;
-      --dog-amber: #d97706;
+      --sky-blue: #82d8ff;
+      --blue: #1f6cff;
+      --blue-deep: #0b1f57;
+      --yellow: #ffd84e;
+      --pink: #ff66a8;
+      --black: #0a0b11;
+      --ink: #111938;
+      --muted: #4a5d87;
+      --white: #ffffff;
+      --card: rgba(255, 255, 255, 0.9);
     }
+
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family: "DM Sans", system-ui, sans-serif;
-      background: var(--nf-black);
-      background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(229, 9, 20, 0.12), transparent 50%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 8c-2 8-8 12-8 18 0 6 4 10 8 14 4-4 8-8 8-14 0-6-6-10-8-18z' fill='%23292524' opacity='.35'/%3E%3C/svg%3E");
-      background-size: auto, 72px 72px;
-      color: var(--nf-text);
-      line-height: 1.45;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 500px at -8% -10%, rgba(130, 216, 255, 0.52), transparent 64%),
+        radial-gradient(900px 540px at 108% 8%, rgba(255, 102, 168, 0.36), transparent 65%),
+        radial-gradient(900px 520px at 50% 120%, rgba(10, 11, 17, 0.26), transparent 62%),
+        linear-gradient(165deg, #f4fbff 0%, #eff5ff 62%, #fdf4ff 100%);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
+
+    .bg-dog {
+      position: fixed;
+      z-index: -2;
+      filter: blur(10px) saturate(1.15);
+      opacity: 0.28;
+      border-radius: 20px;
+      pointer-events: none;
+      object-fit: cover;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.18);
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    .bg-dog.one { width: 320px; height: 420px; top: 8%; left: -70px; transform: rotate(-8deg); }
+    .bg-dog.two { width: 340px; height: 460px; top: 18%; right: -85px; transform: rotate(9deg); animation-delay: -5s; }
+    .bg-dog.three { width: 360px; height: 260px; bottom: -35px; left: 13%; transform: rotate(4deg); animation-delay: -3s; }
+
+    .wrap {
+      width: min(1140px, 92vw);
+      margin: 0 auto;
+    }
+
     .hero {
+      padding: 3.2rem 0 2rem;
       position: relative;
-      min-height: 240px;
-      background: linear-gradient(180deg, rgba(20,20,20,0.25) 0%, rgba(20,20,20,0.85) 70%, var(--nf-black) 100%),
-        url("assets/dogs/lab-yellow.jpg") center/cover no-repeat;
-      padding: 1.25rem 1.5rem 2.5rem;
     }
-    .report-date-badge {
+
+    .brand-pill {
       display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.4rem 0.85rem;
-      background: rgba(0,0,0,0.55);
-      border: 1px solid var(--nf-border);
-      border-radius: 999px;
-      font-size: 0.88rem;
-      color: var(--dog-cream);
-      letter-spacing: 0.02em;
-    }
-    .hero-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .brand-mark {
-      height: 64px;
-      width: auto;
-      max-width: 220px;
-      object-fit: contain;
-      display: block;
-    }
-    .brand-mark.logo-avatar {
-      height: 72px;
-      width: 72px;
-      max-width: none;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--nf-red);
-      box-shadow: 0 4px 20px rgba(229, 9, 20, 0.35);
-    }
-    .dog-strip {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
-      margin-top: -1.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 3;
-    }
-    @media (max-width: 720px) {
-      .dog-strip { grid-template-columns: repeat(2, 1fr); }
-    }
-    .dog-strip-item {
-      border-radius: 10px;
-      overflow: hidden;
-      border: 2px solid var(--nf-border);
-      aspect-ratio: 4/3;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-    }
-    .dog-strip-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.35s ease;
-    }
-    .dog-strip-item:hover img { transform: scale(1.06); }
-    .shell {
-      display: grid;
-      grid-template-columns: 1fr minmax(260px, 300px);
-      gap: 1.25rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.25rem 3rem;
-      position: relative;
-      z-index: 2;
-    }
-    @media (max-width: 960px) {
-      .shell { grid-template-columns: 1fr; }
-      .side-panel { order: 99; margin-top: 1rem; }
-    }
-    main { min-width: 0; }
-    .side-panel {
-      background: linear-gradient(165deg, #1c1917 0%, #141414 100%);
-      border: 1px solid var(--nf-border);
-      border-radius: 12px;
-      padding: 1.25rem 1.35rem;
-      height: fit-content;
-      position: sticky;
-      top: 1rem;
-    }
-    .side-panel h2 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.35rem;
-      letter-spacing: 0.06em;
-      color: var(--dog-cream);
-      margin: 0 0 1rem;
-      font-weight: 400;
-    }
-    .side-panel dl { margin: 0; font-size: 0.82rem; color: var(--nf-muted); }
-    .side-panel dt {
-      color: var(--nf-text);
-      font-weight: 600;
-      margin-top: 0.85rem;
-    }
-    .side-panel dt:first-child { margin-top: 0; }
-    .side-panel dd { margin: 0.25rem 0 0; }
-    .side-panel code { font-size: 0.76rem; background: #0c0a09; padding: 0.1rem 0.25rem; border-radius: 4px; }
-    .kpi-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1.75rem;
-    }
-    .kpi {
-      background: linear-gradient(165deg, #1f1f1f 0%, #181818 100%);
-      border-radius: 10px;
-      padding: 1rem 1.1rem;
-      border: 1px solid var(--nf-border);
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .kpi:hover {
-      border-color: rgba(229, 9, 20, 0.45);
-      transform: translateY(-3px);
-    }
-    .kpi .label {
-      font-size: 0.68rem;
+      background: linear-gradient(120deg, var(--yellow), #ffe98f);
+      color: var(--black);
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--nf-muted);
-      margin-bottom: 0.35rem;
+      letter-spacing: 0.06em;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      padding: 0.42rem 0.95rem;
     }
-    .kpi .num {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 2rem;
-      line-height: 1;
-      color: #fff;
-      letter-spacing: 0.03em;
+
+    h1, h2 {
+      margin: 0;
+      font-family: "League Spartan", sans-serif;
+      line-height: 1.05;
     }
-    .kpi.hero-metric .num { color: var(--nf-red); font-size: 2.5rem; }
-    .section-title {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.75rem;
-      letter-spacing: 0.08em;
-      margin: 0 0 1rem;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .section-title::before {
-      content: "";
-      width: 4px;
-      height: 1.25em;
-      background: linear-gradient(180deg, var(--nf-red), var(--dog-amber));
-      border-radius: 2px;
-    }
-    .top5-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .top5-bar label { font-size: 0.85rem; color: var(--nf-muted); }
-    .top5-bar select {
-      background: var(--nf-card);
-      color: var(--nf-text);
-      border: 1px solid var(--nf-border);
-      padding: 0.55rem 2rem 0.55rem 0.75rem;
-      border-radius: 8px;
-      font: inherit;
-      min-width: 220px;
-      cursor: pointer;
-    }
-    .top5-card {
-      display: grid;
-      grid-template-columns: minmax(120px, 200px) 1fr;
-      gap: 1.25rem;
-      background: var(--nf-card);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--nf-border);
-      margin-bottom: 2rem;
-    }
-    @media (max-width: 560px) {
-      .top5-card { grid-template-columns: 1fr; }
-    }
-    .top5-card img {
-      width: 100%;
-      aspect-ratio: 9/16;
-      object-fit: cover;
-      display: block;
-      background: #222;
-    }
-    .top5-body { padding: 1rem 1.25rem 1.25rem; }
-    .top5-body .uploaded {
-      font-size: 0.82rem;
-      color: var(--dog-cream);
-      margin: 0 0 0.35rem;
-      font-weight: 600;
+
+    h1 {
+      margin-top: 1rem;
+      font-size: clamp(2.3rem, 6vw, 4.6rem);
+      color: var(--blue-deep);
       letter-spacing: 0.02em;
     }
-    .top5-body .eng {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 2rem;
-      color: var(--nf-red);
+
+    .hero p {
+      margin: 1rem 0 0;
+      max-width: 72ch;
+      color: var(--muted);
+      font-size: 1.07rem;
     }
-    .top5-body a {
-      color: var(--dog-cream);
+
+    .tab-grid {
+      margin: 2rem 0 0;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .tab {
       text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-    .top5-body a:hover { text-decoration: underline; color: #fff; }
-    .demo-block {
-      background: var(--nf-card);
-      border-radius: 12px;
-      padding: 1.25rem;
-      border: 1px solid var(--nf-border);
-      margin-bottom: 2rem;
-      font-size: 0.9rem;
-    }
-    .demo-block .bar-row {
+      color: var(--white);
+      background:
+        linear-gradient(150deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+        linear-gradient(140deg, #0d2f79, #1e5cdf);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 14px;
+      min-height: 84px;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin: 0.5rem 0;
+      justify-content: center;
+      letter-spacing: 0.02em;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      box-shadow: 0 14px 28px rgba(9, 21, 57, 0.18);
     }
-    .demo-block .bar {
-      flex: 1;
-      height: 8px;
-      background: #333;
-      border-radius: 4px;
-      overflow: hidden;
+
+    .tab:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 216, 78, 0.9);
+      box-shadow: 0 20px 32px rgba(9, 21, 57, 0.26);
     }
-    .demo-block .bar > i {
-      display: block;
-      height: 100%;
-      min-width: 2px;
-      background: linear-gradient(90deg, var(--nf-red), var(--dog-amber));
-      border-radius: 4px;
+
+    .sections {
+      padding: 1.2rem 0 3rem;
+      display: grid;
+      gap: 1rem;
     }
-    table {
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(31, 108, 255, 0.18);
+      border-radius: 16px;
+      padding: 1.2rem;
+      box-shadow: 0 12px 26px rgba(16, 36, 92, 0.1);
+    }
+
+    .card h2 {
+      font-size: clamp(1.55rem, 2.5vw, 2rem);
+      color: var(--blue-deep);
+      margin-bottom: 0.5rem;
+    }
+
+    .founder-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, 340px) 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .founder-photo {
       width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      background: var(--nf-card);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--nf-border);
+      display: block;
+      border-radius: 14px;
+      border: 2px solid rgba(130, 216, 255, 0.85);
+      box-shadow: 0 14px 28px rgba(11, 31, 87, 0.2);
+      object-fit: cover;
+      transform: none;
     }
-    th, td { padding: 0.65rem 0.75rem; text-align: left; border-bottom: 1px solid var(--nf-border); vertical-align: middle; }
-    th {
-      background: #0c0a09;
-      color: var(--nf-muted);
-      font-weight: 600;
-      font-size: 0.65rem;
+
+    .service-list {
+      margin: 0.45rem 0 0;
+      padding-left: 1.15rem;
+    }
+
+    .service-list li { margin-bottom: 0.25rem; }
+
+    .metric-grid {
+      margin-top: 0.85rem;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(31, 108, 255, 0.18);
+      border-radius: 12px;
+      padding: 0.82rem 0.86rem;
+    }
+
+    .metric .label {
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-    }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(254, 243, 199, 0.04); }
-    .thumb {
-      width: 76px;
-      height: 76px;
-      object-fit: cover;
-      border-radius: 10px;
-      background: #222;
-      border: 1px solid var(--nf-border);
-    }
-    .thumb-ph {
-      display: inline-block;
-      width: 76px;
-      height: 76px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #292524, #1c1917);
-      border: 1px dashed var(--nf-border);
-    }
-    .table-link { color: var(--dog-cream) !important; font-weight: 600; }
-    .meta-line { font-size: 0.75rem; color: var(--nf-muted); margin-top: 0.35rem; }
-    .footnote {
-      margin-top: 1.5rem;
-      font-size: 0.85rem;
-      color: var(--nf-muted);
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 1.25rem;
-      text-align: center;
-    }
-    .gen-footer {
-      font-size: 0.8rem;
-      color: var(--dog-cream);
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--nf-border);
-    }
-    .sample-block {
-      background: var(--nf-card);
-      border-radius: 12px;
-      padding: 1.25rem 1.35rem;
-      border: 1px solid var(--nf-border);
-      margin-bottom: 2rem;
-      font-size: 0.88rem;
-      color: var(--nf-muted);
-    }
-    .sample-block h3 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.35rem;
-      letter-spacing: 0.06em;
-      color: var(--dog-cream);
-      margin: 0 0 0.75rem;
-      font-weight: 400;
-    }
-    .sample-block p { margin: 0.5rem 0; }
-    .sample-block .sample-id { color: var(--nf-text); font-weight: 600; }
-    .reels-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .reels-empty {
-      color: var(--nf-muted);
-      font-size: 0.95rem;
-      margin: 0 0 2rem;
-    }
-    .reel-card {
-      background: var(--nf-card);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--nf-border);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .reel-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(229, 9, 20, 0.45);
-    }
-    .reel-thumb-wrap {
-      position: relative;
-      aspect-ratio: 9 / 16;
-      background: #222;
-    }
-    .reel-thumb-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .reel-thumb-ph {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(160deg, #292524, #1c1917);
-    }
-    .reel-badge {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: var(--nf-red);
-      color: #fff;
-      font-size: 0.65rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 0.25rem 0.45rem;
-      border-radius: 4px;
-      z-index: 1;
+      color: var(--muted);
     }
-    .reel-card-body { padding: 0.75rem 0.9rem 1rem; flex: 1; display: flex; flex-direction: column; }
-    .reel-meta-row {
+
+    .metric .value {
+      margin-top: 0.28rem;
+      font-size: 1.65rem;
+      line-height: 1.05;
+      font-family: "League Spartan", sans-serif;
+      color: var(--blue-deep);
+    }
+
+    .report-action {
+      margin-top: 0.9rem;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.35rem;
-      align-items: baseline;
-      margin-bottom: 0.35rem;
+      align-items: center;
+      gap: 0.6rem;
     }
-    .reel-date { font-size: 0.72rem; color: var(--dog-cream); }
-    .reel-er {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.15rem;
-      color: #4ade80;
-      letter-spacing: 0.02em;
-    }
-    .reel-stats { font-size: 0.78rem; color: var(--nf-muted); margin-bottom: 0.5rem; }
-    .reel-cap {
-      font-size: 0.8rem;
-      color: var(--nf-text);
-      margin: 0 0 0.65rem;
-      flex: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .reel-card-link {
-      color: var(--dog-cream);
-      font-weight: 600;
-      font-size: 0.82rem;
+
+    .btn-report {
+      display: inline-block;
       text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      background: linear-gradient(130deg, var(--yellow), #ffea95);
+      border: 1px solid rgba(10, 11, 17, 0.25);
+      border-radius: 10px;
+      padding: 0.58rem 0.92rem;
+      transition: transform 0.2s ease;
     }
-    .reel-card-link:hover { color: #fff; text-decoration: underline; }
-    .top5-views-er {
-      font-size: 0.88rem;
-      color: var(--nf-muted);
-      margin: 0 0 0.5rem;
-      line-height: 1.35;
+
+    .btn-report:hover { transform: translateY(-1px); }
+
+    .hint {
+      font-size: 0.87rem;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      margin-top: 0.55rem;
+      border-radius: 12px;
+      padding: 0.82rem 0.9rem;
+      border: 1px solid rgba(255, 102, 168, 0.35);
+      background: linear-gradient(135deg, rgba(130, 216, 255, 0.18), rgba(255, 102, 168, 0.16));
+      font-weight: 700;
+    }
+
+    .contact-box a {
+      color: var(--blue-deep);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 2px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 1rem 0 2.2rem;
+      font-size: 0.9rem;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0) rotate(0.3deg); }
+      50% { transform: translateY(-10px) rotate(-0.3deg); }
+    }
+
+    @media (max-width: 980px) {
+      .tab-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bg-dog.two { top: 25%; }
+    }
+
+    @media (max-width: 640px) {
+      .founder-layout { grid-template-columns: 1fr; }
+      .tab-grid, .metric-grid { grid-template-columns: 1fr; }
+      .bg-dog.one, .bg-dog.two, .bg-dog.three { opacity: 0.18; }
     }
   </style>
 </head>
 <body>
+  <img class="bg-dog one" src="https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg?auto=compress&cs=tinysrgb&w=900" alt="" aria-hidden="true" />
+  <img class="bg-dog two" src="https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg?auto=compress&cs=tinysrgb&w=900" alt="" aria-hidden="true" />
+  <img class="bg-dog three" src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=900" alt="" aria-hidden="true" />
+
   <header class="hero">
-    <div class="hero-inner">
-      <div class="brand">
-        <img class="brand-mark logo-avatar" src="https://scontent.fblr1-4.fna.fbcdn.net/v/t51.2885-15/482591538_1215684776824514_3650976725290541299_n.jpg?_nc_cat=104&amp;ccb=1-7&amp;_nc_sid=7d201b&amp;_nc_ohc=lAtn-5khw04Q7kNvwHF1MmI&amp;_nc_oc=AdqjUv2LB-XtIb5cZC3M5PCS4DcF9ak2O5w0OFE0ksXUhtJwJwcr4PeqXQvPy7pErSM&amp;_nc_zt=23&amp;_nc_ht=scontent.fblr1-4.fna&amp;edm=AL-3X8kEAAAA&amp;oh=00_Afwr7Ipfyx3DsI_xEyvTkLgBjR-8AcwoEv0z-oYelMMSog&amp;oe=69C5811A" width="220" height="72" alt="Doggo Pokko" />
-        <div>
-          <div style="font-family:Bebas Neue,sans-serif;font-size:1.65rem;letter-spacing:.12em;color:#fff;">Doggo Pokko</div>
-          <div style="color:var(--nf-muted);font-size:0.92rem;">@doggo_pokko · 43045 followers</div>
-          <div class="report-date-badge" title="Report generation time">Report generated · Sunday, March 22, 2026 · 11:00 UTC</div>
-        </div>
-      </div>
+    <div class="wrap">
+      <span class="brand-pill">Doggo Pokko</span>
+      <h1>India's First Dog Influencer</h1>
+      <p>
+        A premium platform for pet parents seeking practical dog training, trusted guidance,
+        and responsible canine awareness with a modern, global perspective.
+      </p>
+      <nav class="tab-grid" aria-label="Landing navigation">
+        <a class="tab" href="#about-founder">About the Founder</a>
+        <a class="tab" href="#services">Services</a>
+        <a class="tab" href="#instagram-metrics">Instagram Metrics</a>
+        <a class="tab" href="engagement_report.html" target="_blank" rel="noopener">Engagement Report</a>
+        <a class="tab" href="#contact-us">Contact Us</a>
+      </nav>
     </div>
   </header>
 
-  <div class="dog-strip"><div class="dog-strip-item"><img src="assets/dogs/golden.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" /></div><div class="dog-strip-item"><img src="assets/dogs/pexels1.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" /></div><div class="dog-strip-item"><img src="assets/dogs/pexels2.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" /></div><div class="dog-strip-item"><img src="assets/dogs/lab-yellow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" /></div></div>
-
-  <div class="shell">
-    <main>
-      <div class="kpi-row"><div class="kpi hero-metric"><div class="label">Engagement rate (sample)</div><div class="num">14.717%</div><div class="meta-line">Avg interactions ÷ followers × 100</div></div><div class="kpi"><div class="label">Avg engagement / post</div><div class="num">6335.06</div></div><div class="kpi"><div class="label">Avg likes (reels)</div><div class="num">4551</div></div><div class="kpi"><div class="label">Avg comments (reels)</div><div class="num">100</div></div><div class="kpi"><div class="label">Avg plays / views (reels)</div><div class="num">155941</div></div></div>
-
-      <div class="sample-block">
-  <h3>Worked example — one post</h3>
-  <p class="sample-id">Post …60528756 · Dec 13, 2023</p>
-  <p><strong>Components</strong> (when not using bundled insight): likes + comments + saves + shares.</p>
-  <p>157,623 + 711 + 7,864 + 0 = <strong>166,198</strong></p>
-  <p>No bundled <code>engagement</code> insight — total interactions = sum of components.</p>
-  <p><strong>Total interactions used for rates</strong>: <strong>166,198</strong></p>
-  <p><strong>Engagement rate vs followers</strong> (benchmarking across account sizes): 166,198 ÷ 43,045 × 100 = <strong>386.103%</strong></p>
-  <p><em>Reach not returned for this post — use vs followers below, or connect media insights permissions for reach-based ER.</em></p>
-</div>
-
-
-      <h2 class="section-title">Latest reels (by views)</h2>
-      <p style="margin:-0.5rem 0 1rem;color:var(--nf-muted);font-size:0.88rem;">Highest plays/views first; ties use total interactions. Dates in UTC.</p>
-      <div class="reels-grid"><article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/502990139_4398349367059008_1746172061602107970_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=To_LnZlnwBkQ7kNvwFp1vYv&amp;_nc_oc=Adr-1UZ8-Ds4tVzAD-BhpmTTCvKvkR8O0Ptn2Bns9-gbcGmc0il0OOYyE-4cUgZsXnM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQG4RdISFp4T5UstJQGRTlYzEfiSsew8BeI4LtCilgXqBdQiIbbOuk3w5mdyPUVdStI0EDhZFfjGaA&amp;oh=00_AfzHWCBDIcQlt599HoL2rKsgR5JPFwHgRhFoKvKHP8-5JQ&amp;oe=69C59E2C" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 13, 2023 · 2 yr ago</span>
-      <span class="reel-er">386.103% (followers)</span>
-    </div>
-    <div class="reel-stats">157,623 likes · 711 comments · 5,550,184 views</div>
-    <p class="reel-cap">Whose fault is it according to you? I personally feel the dog’s personal space was hindered and the lady didn’t stop even when the dog signa</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C0zaQGHS1ba/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/491413896_691812423634833_5399170607179915060_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=104&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=PRpY-MUDBBkQ7kNvwFiJlj5&amp;_nc_oc=AdpewmAzE7-iUnZA5VfbbXBBw-_LnkqZlOFLCi8hu-CLHeCml-nBpeIJqo7U2HsjdAc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=mmp95XBWlS_hmH-CNz8XCA&amp;_nc_tpa=Q5bMBQEIiqwa5b5hLcSn79zJPO9YDhtaOVRDCh6YNCy8DZ4mUndVlwxmavdWoQz6_jvAkTpu5tUoirGsdg&amp;oh=00_AfzMcG4dVnJAad2CgTy3ApmsKeyAosmh8VtD0vJ-F2U14g&amp;oe=69C586C1" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jul 26, 2024 · 1 yr ago</span>
-      <span class="reel-er">64.244% (followers)</span>
-    </div>
-    <div class="reel-stats">25,026 likes · 72 comments · 4,732,754 views</div>
-    <p class="reel-cap">Preventing Dog Emergencies: Keeping Your Furry Friend Safe. Learn important tips to keep your dog safe and prevent them from ingesting harmf</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C95Vl7GSuPO/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/491422841_1401529094217930_6108067925967106841_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Vo6qNPzCUd4Q7kNvwGyePr9&amp;_nc_oc=AdoyB8nLZhuVmORES0S-CuF3t5J7Lroc6XtnOMZ5afNNcehPS70luaMKykI1vNx7YDw&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQF59OtqKFidbX26pjafXhLUQBqZTiiPcoQiFbtePHkiFOkmaZhuF_UHSkUPi7YtE25J-5jGGpF09A&amp;oh=00_AfwvvBYVOsMNozZawJb0HBcziyQp6ppuZHUNm4fvGbLiMQ&amp;oe=69C58727" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 11, 2023 · 2 yr ago</span>
-      <span class="reel-er">359.854% (followers)</span>
-    </div>
-    <div class="reel-stats">134,895 likes · 534 comments · 2,705,913 views</div>
-    <p class="reel-cap">Wondering what to do when your dog experiences seizures?  follow these steps -🐾 Stay calm during dog seizures. - 📹 Record the incident for t</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C0uQZDyyBNi/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.75761-15/480714753_18048988871515068_7087910106734943182_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=xUDqoupHD9kQ7kNvwHAYmzj&amp;_nc_oc=Adomos6hdnGZN894NXo_Jq1DEB7OZ0lDJhiJ3mXNeHsKf4PHDeEfX48f3R9EGzcelbU&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=LC6JoiJQkIU4fj3NTdhvzA&amp;_nc_tpa=Q5bMBQFVN9BXeJwQYJqzj7g7lTv7wuMWABVH2shVo4uorjHBgA5EcmF8Jpf99E59NKH-P1t2mHocV1HKsw&amp;oh=00_Afwyziki95UHqWwjkbRpbf8MMh_UEXFfQ46DXWzrsBakKA&amp;oe=69C5A78D" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 17, 2025 · 1 yr ago</span>
-      <span class="reel-er">176.562% (followers)</span>
-    </div>
-    <div class="reel-stats">51,958 likes · 579 comments · 2,448,486 views</div>
-    <p class="reel-cap">What Your Dog’s Vomit is Telling You About Their Health ? We discuss how the color and consistency of a dog’s vomit can provide important in</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DGLlXAIMRE5/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/505497444_698067366182959_74148366761806594_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Nc4n2_bOTeYQ7kNvwH97l_8&amp;_nc_oc=AdpavSclB4AGD5waDojXqLFvzEvllwuzKnDxgau3onYLZIvDjq-SQ2MiHjCWdX579Kg&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=mmp95XBWlS_hmH-CNz8XCA&amp;_nc_tpa=Q5bMBQHj9xtCX0ofaOJgap25QB473vpvJqxSGafTdW6pT2Bgjy9f2cvE-8H4MhqNItF8C--zS5EB37o02g&amp;oh=00_AfyC1By3YgK5XjJ1KGDYT_DaxsO-RmfYtdFIJqDg3uHHXw&amp;oe=69C5835F" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Sep 01, 2024 · 1 yr ago</span>
-      <span class="reel-er">152.18% (followers)</span>
-    </div>
-    <div class="reel-stats">52,794 likes · 1,231 comments · 1,885,264 views</div>
-    <p class="reel-cap">Tragic Rabies Death Highlights Importance of Prompt Action After Dog Bites. We discuss the tragic case of a 21-year-old girl who died of rab</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C_YYZ_Gscxd/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/602377962_18082283711515068_5797965261900340521_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=8YABHif5ma0Q7kNvwH0R8aW&amp;_nc_oc=AdoOjgOLO2gSy-L0KvzU9m-YHlCF4ZmArv8ssKT2YTXstycxihnNT-j-z_VYe003l8w&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQG1__9Om75SzqQjhpQqmQajynf2l8HHQdP4OTT1iHZNAdqdDCla9evSsSxT75b2LpJyI_TW5h5c8w&amp;oh=00_AfxWlijD4AMGVXEdZnfv7LjVxK-yXFPnwxstXJYRF4k5Bg&amp;oe=69C59E73" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 19, 2025 · 3 mo ago</span>
-      <span class="reel-er">229.476% (followers)</span>
-    </div>
-    <div class="reel-stats">90,666 likes · 2,316 comments · 1,340,705 views</div>
-    <p class="reel-cap">Understanding Dog Memory and Responsible Pet Ownership.  #dogsofinstagram #petcare #dogtrainer #trendingreels #dogstagram</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DSdKcKFEwjC/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/498170501_667895716128786_1665820039896590120_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=VlpJyNfJROMQ7kNvwGMJai5&amp;_nc_oc=AdpDAKN1xF-XbNn3fZb7fh0r1rvQa4K--6uB72sssk8fiWZN320-U09ajWONgWkqBfM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQHn_2ciqUaHmuwuhJx0MnSGz490QIsrvytkWFO7jqeuljBklU9A_e467Jmb5o5KSGptTwZkNbF3oA&amp;oh=00_AfxZnfQx8p6fWUyqjZJFAeXeg0fDAtZDHQSGEJcwN5eTAQ&amp;oe=69C5AD31" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Oct 30, 2023 · 2 yr ago</span>
-      <span class="reel-er">5.255% (followers)</span>
-    </div>
-    <div class="reel-stats">2,002 likes · 110 comments · 1,330,729 views</div>
-    <p class="reel-cap">Top 3 Reasons this woman got into Trouble with the dog:  1️⃣ No Chat with the Dog Parent 🗣️ 2️⃣ ChowChow = Guard Dog Mode 🚷 3️⃣ Invading Per</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CzCHgUhyspk/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.75761-15/469716900_18041365943515068_1944448272162804651_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Be7Mrj5f_8gQ7kNvwEx8cLX&amp;_nc_oc=Adr_847ftMqj0OR_SxG-5VMyIg3TM6i6KNbNwvO9bxiPnnSrpvn-XO4x8O7-VRAq0XE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=LC6JoiJQkIU4fj3NTdhvzA&amp;_nc_tpa=Q5bMBQEV8JPB4ZrgCGAPgra1rWfi-n_jorWyA6SN-fyIRdUQvGnuQPLncuVs-Gqt1LhaOo76KjP1CkJvig&amp;oh=00_AfzWWIHIedCN374ahvxvt2pbnwJ5mSnnCtR9JF3w_Fs3oQ&amp;oe=69C59C29" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 13, 2024 · 1 yr ago</span>
-      <span class="reel-er">71.802% (followers)</span>
-    </div>
-    <div class="reel-stats">25,953 likes · 94 comments · 1,239,513 views</div>
-    <p class="reel-cap">HAS YOUR DOG EVER EXPERIENCED YELLOW VOMIT ? Don’t worry! It’s just bile. When the dietary habits are changed or dog is empty stomach or may</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DDgQznwoxuC/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/641334343_18089359736515068_8458820212192222093_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=80BEpx5emXkQ7kNvwFey55_&amp;_nc_oc=AdqoT4LATbGp_ZbBaJPDlsc78Jx8LHv8VTaJLYQzxyY9y7GFGWILs7dIy1iGCrbhed0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQG3FJHh7gJs4fCKIlspxu-aoO-_qmWxP-cRfSAqZAxVo36o9Z7RWeWmUqFua6WoKDzERfyVP9kevA&amp;oh=00_AfwmirFHzXg8MCJKnFYFLkfbxJQvt4xgrFz2mOWyKFmJ-A&amp;oe=69C58B99" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 26, 2026 · 24d ago</span>
-      <span class="reel-er">39.854% (followers)</span>
-    </div>
-    <div class="reel-stats">14,864 likes · 95 comments · 832,633 views</div>
-    <p class="reel-cap">Why can’t he catch the ball?   Because it’s tied to his collar… and he’s stuck in a loop 😂  But here’s the interesting part 👇  This simple g</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DVNj8TsEy4Q/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/502154101_1829790417610987_6702734619767658502_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=1PZJF36Tnn8Q7kNvwE5KyQg&amp;_nc_oc=Adp1PecwwsGi60S_oZqP2bC0rKf74TV8oCLVsns8GjHO1S8kPO9pOf8biwbuV0-KMsI&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=xQOJMwmunWfLy26Iy2vnNA&amp;_nc_tpa=Q5bMBQEDQki57vhFqkg8qV4JbAoyEVT7rPOM38vhCCc6aMBT65XLuxbL0SxcqSpmcZ1Ce8DUAHq4BFDO2A&amp;oh=00_AfxLtba9NzkyfN-ttPCJoKa-T46F2tPXcaeg6TwMEgdgIg&amp;oe=69C5A309" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 14, 2023 · 2 yr ago</span>
-      <span class="reel-er">22.077% (followers)</span>
-    </div>
-    <div class="reel-stats">7,024 likes · 40 comments · 816,432 views</div>
-    <p class="reel-cap">🐶🔍 FleaFacts101 📺  Dive into the world of fleas and their pesky effects on our furry pals! 🌟 Uncover the secrets of these tiny troublemakers</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CtexrcAtM1U/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/497157320_552121191006045_3838191123831545846_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=SeMA1mVEw1sQ7kNvwFKFZOw&amp;_nc_oc=AdrmBMUaO3F5Gk_r64keq7XUdp_YVCFMFQfRV2xlfjxEBBfotmiJIlsW37LUENe6J0E&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQHn-JoVOQOSc4PoYrcjhHM7eHfFoaO45MXQzL0eKIR2P-YITWrN0loiAgdEPfLvD3cuRNoSsY0HOA&amp;oh=00_AfzUQFxy5qGHTZbQ_w9VlUqTl_8O2YPFhME3NZ-WqZh8mQ&amp;oe=69C5AFBE" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jan 18, 2024 · 2 yr ago</span>
-      <span class="reel-er">38.653% (followers)</span>
-    </div>
-    <div class="reel-stats">14,233 likes · 125 comments · 689,415 views</div>
-    <p class="reel-cap">Don’t let your dog lick your open wound. Yes, it’s true that they licks are magical and have antiseptic properties but also have a lot of ot</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C2QFRtxyxaw/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/629702182_18087581483515068_4657327852712477859_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=n9-bsV0coD4Q7kNvwG5Ok1b&amp;_nc_oc=AdoMdUA9MYQxcmABQouTACgLbVH3_Dbzzq6smVanKVmDQtx9kd-lNBj0Yo89fswwps0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGenc7s2GJYE5cO72zPGzxMqF576ZhEQYOM7Tb9NolYQHalTBTp-HKngRQgzDCp6abBEuBCn8bv7w&amp;oh=00_AfxNfszTNScwzOjVG9rptC-xESLIXex_CbZe0oOzsKKLag&amp;oe=69C5A0AA" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 08, 2026 · 1 mo ago</span>
-      <span class="reel-er">124.131% (followers)</span>
-    </div>
-    <div class="reel-stats">40,021 likes · 152 comments · 667,794 views</div>
-    <p class="reel-cap">🚨 DOG CPR CAN SAVE A LIFE — DON’T PANIC 🚨  If your dog collapses or stops breathing, staying calm is the first step ❤️🐶  👉 Place your dog ge</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DUgQYYrE5u0/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/632352204_908415802140570_5211886789845816550_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=UtHFgu9AQHsQ7kNvwGazWtQ&amp;_nc_oc=AdoLvHczmPtPQtB62DPX5McF0owvCP44jhm1aM_Fist30MddIAzKHa6tPyl9MFF0U1g&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHTYF_WJfbuh6kv4Vc5l4b0uokwICM7jdF1rLKl8LPR4ZBGTzC8DjOMqg9REgGkc8N9uMWDtgEHOw&amp;oh=00_AfylugYkekaq6gdMszDqp31ZxxHGVEC9IgxtHWM7iQP0uw&amp;oe=69C5A9CC" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 16, 2026 · 1 mo ago</span>
-      <span class="reel-er">56.868% (followers)</span>
-    </div>
-    <div class="reel-stats">22,071 likes · 512 comments · 646,637 views</div>
-    <p class="reel-cap">Ever noticed your dog kicking grass after pooping? 🐕💩  It’s not just drama — it’s territory marking! Dogs have scent glands in their paws, s</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DU1C74qkwhS/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/496674901_665640703023275_5459891773123474112_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=100&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=nX4VRR0t-tAQ7kNvwHtQf2H&amp;_nc_oc=Adofh2BO_fRTrrDG1gRUV-MFTuKKi05MDVpd9ETQbT0D3ZTAJC_rTF0MCTKl_9ZMbOY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=xQOJMwmunWfLy26Iy2vnNA&amp;_nc_tpa=Q5bMBQErS40p59CTHQHzqE4XNvv22andvn6YF-C8dmWdn0s6qQwmO0Cd42vqDs0xb3Fm42zMLnc66igF7g&amp;oh=00_AfxwvA2B8lUci7hGKgqoN0dVDsnWQ3mfuqBX9oMHmdH1zw&amp;oe=69C5824D" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 09, 2023 · 2 yr ago</span>
-      <span class="reel-er">94.218% (followers)</span>
-    </div>
-    <div class="reel-stats">34,121 likes · 102 comments · 615,072 views</div>
-    <p class="reel-cap">📚 Get ready for a crash course in canine sleepology! 🐾  🐶 Meet the Lion’s Pose, where our furry friends channel their inner jungle royalty. </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CtR5dJJLEO8/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.75761-15/470351874_18041636741515068_4397080893056674015_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=l4Q4aoBpKvkQ7kNvwFxuZmO&amp;_nc_oc=AdqOOrVgKwPBA98aBoMKHlLrN8emoPLbHaa5rwAl9fCs5MFLVnjJZKJBWGLGYnSv-NA&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=LC6JoiJQkIU4fj3NTdhvzA&amp;_nc_tpa=Q5bMBQFzRvC-z7skrgJ4AYZRuCwjQ1q2cl0lYHLjTw8WQoM8kxgZvCmcmOsu50gc_gZvgFOUi_D75dMvGQ&amp;oh=00_AfybQPHxMjZzr78uasIWfPVluvNbtbkswusfdMbBVSpEzw&amp;oe=69C57E9E" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 15, 2024 · 1 yr ago</span>
-      <span class="reel-er">22.955% (followers)</span>
-    </div>
-    <div class="reel-stats">8,452 likes · 88 comments · 610,378 views</div>
-    <p class="reel-cap">Worms in dogs are a common issue and is often neglected by dog parents. Please be a responsible one and get your furry baby dewormed on a re</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DDmEp60Sg2x/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/491426305_1226634085730885_1076936631676035512_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=IH8n3GS7nOEQ7kNvwFRz9bU&amp;_nc_oc=AdptRvemCgUpc-pb1JG7FSzQeOqv3ruUXkymJd_3Wdp4nYMCtE9V5YL_jHNgAHEcS_s&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQEZtsuZeg1cEMz5uiaVoY9GDAu2aXRD2SUaNe51A9g9sFLClAMvG2PivVqNSEu8zmWMZ61chhQraw&amp;oh=00_AfzUzeAkSVwj-Lcal-27VsDontW6J80wYQkq5ez70CAr2A&amp;oe=69C590D9" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 28, 2023 · 2 yr ago</span>
-      <span class="reel-er">52.331% (followers)</span>
-    </div>
-    <div class="reel-stats">20,055 likes · 197 comments · 605,861 views</div>
-    <p class="reel-cap">🐾 Sleep Advocate 🌙 | 14-16 Hours for Canine Zzz’s 🕒 | 💤 Vital for Health &amp; Happiness ✨ | Spot the Signs: Lethargy, Irritability, Brain Fog, </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CuC0_oRMNVx/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503284877_1398060178196166_9105448890729270027_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=EtssaC_wIy4Q7kNvwFzcCvg&amp;_nc_oc=AdoPZITDs5utR_fufX1AO4WMi7iKsKp5mGjwakhpHXvh7cl5GC2mvCK7UbEJxSFv3s0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=mmp95XBWlS_hmH-CNz8XCA&amp;_nc_tpa=Q5bMBQF5LoXeMCprdumNYvSGPXWfZQ4igCJEcNILT104JSaGsJGOdZgEXOoLU4un3udX27LhrNGAQBLqAw&amp;oh=00_AfwDLI6tIPFtOUlRodoA3eCrjIuWQIPRt7eKiQYlOfX3vw&amp;oe=69C5B08E" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 21, 2024 · 1 yr ago</span>
-      <span class="reel-er">28.949% (followers)</span>
-    </div>
-    <div class="reel-stats">9,645 likes · 901 comments · 592,860 views</div>
-    <p class="reel-cap">Is your dog showing signs of stunted growth and frequent vomiting? It could be a sign of intestinal worms! These pesky parasites hinder nutr</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C8fNf5GyRw5/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/617605374_18085029425515068_2433256006798984542_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=3QUg5hHlXQQQ7kNvwHUl2Uc&amp;_nc_oc=AdpX2rZOqSXynjcdLKleQlAP22K3nBRI9NWJpFI_CqgFhdF58dHOCsEhWbi_rauIYDk&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQHE2No_fQbqcog3VNeM9m-kCD6yphxuPgGqywVhodAunWAnVDepFq6BCIZoDMoZzYWtEDV3XOBaNw&amp;oh=00_AfxQg4663zozcjUto006sWe98AusFUD_hnQcyX1qUrfHZg&amp;oe=69C5A508" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jan 15, 2026 · 2 mo ago</span>
-      <span class="reel-er">148.064% (followers)</span>
-    </div>
-    <div class="reel-stats">53,750 likes · 8,215 comments · 574,224 views</div>
-    <p class="reel-cap">500+ stray dogs. Multiple districts. One disturbing truth.  As per media reports, in Kamareddy, Jagtial &amp; Hanamkonda (Telangana), hundreds o</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DTiGSewE92l/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/500348814_1240884270738385_8270018696406989305_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=111&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=lH7fLgNWWl0Q7kNvwEC_a6P&amp;_nc_oc=Adq2IYbu2F8dVrjl-6GydLsJbyOZxpz0p8BjfGgXkMfWoA6phFxVktg7F4RPsx6iMLc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=xQOJMwmunWfLy26Iy2vnNA&amp;_nc_tpa=Q5bMBQGY3pMV5-yMHDiKQohRyy7OW8Iq5efUnIdD_LzkN_yd0jO5PGj05qaaxGwZq9ZK51C3aG5Ut11dYw&amp;oh=00_AfwvpEMHbnhLF291jEuTd1ESnOutlcYF-w_68Fs9h26Sqw&amp;oe=69C59CA7" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 20, 2023 · 2 yr ago</span>
-      <span class="reel-er">53.827% (followers)</span>
-    </div>
-    <div class="reel-stats">18,067 likes · 37 comments · 494,304 views</div>
-    <p class="reel-cap">🐶🌡️ Stay Pawsitive &amp; Informed! 📹🔍 👉 Expert Tips: Measuring Doggy Temperatures! 👈 ✨ Creator of WoofieCare™ Videos 🎥 📍 Pet Wellness Enthusiast</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CtuOjWHxYal/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/524637250_18066061358515068_1700198027769179900_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=CTk_u0dTJ2YQ7kNvwHajdb4&amp;_nc_oc=Adp0F0druQ81VFiqtDxyY6NANGnMwjewqf1Ek2lYEyXzxgRVy3_4DBHcpBDvvoSPRo0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=_LNhtLSlXTdOVJfjFF_7Gw&amp;_nc_tpa=Q5bMBQF6wxBycfbac80exU-bvYFUBCBoc2KKnPekUj-OB-522U1U4Iya48jr8MLoSGs2rHD8Mk7qApuyWg&amp;oh=00_Afy2Rv5toURdg-lXm-nQbRy52jlvAQbnPLu36NljOQGf4Q&amp;oe=69C5A074" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jul 26, 2025 · 7 mo ago</span>
-      <span class="reel-er">56.151% (followers)</span>
-    </div>
-    <div class="reel-stats">16,600 likes · 1,153 comments · 367,155 views</div>
-    <p class="reel-cap">Saving Your Dog’s Life: What to Do If They Ingest Poison. Few things to note down: ALWAYS VISIT A VET EVEN IF THE DOG IS FEELING FINE. THIS </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DMlRLgYh2w7/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/498548401_507416115787903_7096762740985342091_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=NWlkU88qusUQ7kNvwFZYAFF&amp;_nc_oc=AdoapbqN79JEnxIux6KMOLk18rw3XPRp6_zVd0yU0y4s-hBUQT4dozzHtGirjOQGflY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=LC6JoiJQkIU4fj3NTdhvzA&amp;_nc_tpa=Q5bMBQHRN3Vj-lvXvGMDNIZl9yvkZMidGFBa7ZaPrOu5r3peqBjdHlZfrVNvIkOXCVqpzLrwiPt7bDhrBw&amp;oh=00_Afx4FBSiOVcUtiTbzukWYgG8uXxpDTUAVlPoSvMBKhfzrA&amp;oe=69C58B2A" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Mar 11, 2025 · 1 yr ago</span>
-      <span class="reel-er">44.932% (followers)</span>
-    </div>
-    <div class="reel-stats">16,177 likes · 59 comments · 358,333 views</div>
-    <p class="reel-cap">First Aid for a Dog Experiencing Heat Stroke.  Heat stroke in dogs is an emergency! Move them to a cool spot, cool their body, and keep them</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DHEHaRcMv3M/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503336143_1344341170002538_8744617062579259870_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=gjhyeChKsmMQ7kNvwGCYDDL&amp;_nc_oc=AdrJEO4oWM-XrIVwAacF8MX16g84bVTeFQZS8aIykE2L4J9kN9c4POQl6srIN3OUkL4&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQEkR49vbrpOygupZZ4XqldLvg3GjNZ27291Q_BPWTmDhbrdiLHs-rUAJP4GDKAsM_xjWgst8BYadQ&amp;oh=00_AfxqtfVWBttLigng9rcYeBcSkLituBloQPxAkzo-OCOfPA&amp;oe=69C58961" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Sep 15, 2023 · 2 yr ago</span>
-      <span class="reel-er">17.054% (followers)</span>
-    </div>
-    <div class="reel-stats">6,223 likes · 33 comments · 315,668 views</div>
-    <p class="reel-cap">🐾 Doggo Hydration Tips Reel 🐶💧  📚 Learn the DOs &amp; DON’Ts of Keeping Your Pup Hydrated! 🚰  ✅ Regular Access: Keep the Water Bowl Flowing! ✅ P</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CxOPgMgyPuQ/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/502549858_1417486739262625_6358092944277594520_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=WV1Y_Ap_3D8Q7kNvwGKEf-E&amp;_nc_oc=AdrpXI3EBSpUuT4ABJTjWK0Fn9jikqetigNE3si-XoNECxE76t4xkQ-GQjqSc1kGMR0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQFoJvBca7nQEtXKHtgKggZe018pSiHfarWIln4yF1gxxRmQhwPsaZReKXHE4eIuNNob5AaCxtf_Pw&amp;oh=00_AfxScfCRzel3UW_zC2QlpPpPmRkFfQE8L_j3OeoLOnPpSg&amp;oe=69C57F7B" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 29, 2023 · 2 yr ago</span>
-      <span class="reel-er">64.997% (followers)</span>
-    </div>
-    <div class="reel-stats">23,103 likes · 83 comments · 313,259 views</div>
-    <p class="reel-cap">🐾 Virtual Dog Lifestyle Guru 🌈✨  🐾 Inspiring Canine Bliss with Blue &amp; Yellow 🌟 🐶💤🔷🌼  🐾 Embrace the Pawsitivity of Blue 💙 🛏️💤💤  🐾 Unleash the</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CuFZ0q-NC24/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503201559_1052862349512541_7438786952566182983_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=CHLV3tU96pkQ7kNvwFjT9FM&amp;_nc_oc=Adpz-GlqroM1vbg4G7zYh3ZPo_ImwwEB31Y9rNBeXJkHLKAmELNwl4JJBTDWG0yusjg&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQHzFv0J5Tsr9Q48hO9UYt2cQve6NJv3pdTnMNm8sTpt_WXeggSBSWMasKdSM3xF1a4sV1NHUo_2AQ&amp;oh=00_AfxjIk2b762lslfx7dPnurVkDz6LTv2-QMwBog212Dw99g&amp;oe=69C58C01" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 23, 2023 · 2 yr ago</span>
-      <span class="reel-er">20.506% (followers)</span>
-    </div>
-    <div class="reel-stats">7,129 likes · 228 comments · 249,398 views</div>
-    <p class="reel-cap">Wondering what is Dog neutering in male dogs? Don’t worry, I’ve got your back. Dog neutering, or gonadectomy, involves the surgical removal </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C1NKY2LSJSW/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/500941495_687467120550120_1371936233492311322_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=sDpqVvXbSRAQ7kNvwHCO8BU&amp;_nc_oc=Adoxu_4urRiYnAuCwklI9ERIfgk6vSOLjPAhP485x5P0RINX5wpzglD-QXT3BDGWOrY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQEACGN6TPCesjoPZReRnbOQbnVEkh7IhhOjVqVxIPYqbwUrRf97YqAQuxSpIgPkUsyyz0dEoQeHbA&amp;oh=00_Afx_iQ_ltfJkhJfJD8DfMqEKwTtvwqBb2uRaNwLf2eWhRg&amp;oe=69C587E9" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 19, 2024 · 2 yr ago</span>
-      <span class="reel-er">26.161% (followers)</span>
-    </div>
-    <div class="reel-stats">10,228 likes · 30 comments · 243,891 views</div>
-    <p class="reel-cap">3 Summer Mistakes Dog Parents Make: How to Keep Your Dog Safe and Happy!  Summer is here and it’s important to take care of our furry friend</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C3igNPwyoqU/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/497468139_1110316424471034_6114959263839221716_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=gbuBoRkcheAQ7kNvwEXnSMM&amp;_nc_oc=AdpbcU8yxKJyb2haoXZxMo_tRtzY-YYWnqMn7De45wyag7wOa_6Zd8GezdRN7Sp-0LE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQEbSA53rAR13qMi45e0laVacVOXpdalad9WuLMGqLB-Tw0uopCEEMj8oRvIvIT7Rg0zI8V2N5MRyg&amp;oh=00_AfzLjxiJs2vTFhG-b3CLpcnuUohOpeQOKdApHStekGmwBQ&amp;oe=69C5B38D" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jan 16, 2024 · 2 yr ago</span>
-      <span class="reel-er">6.094% (followers)</span>
-    </div>
-    <div class="reel-stats">2,220 likes · 232 comments · 233,475 views</div>
-    <p class="reel-cap">Look at these gentlemen, proving that humans don’t deserve dogs. What on earth was this puppy’s fault? Please share it with your friends, do</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C2K8f9AydDK/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/502501774_9164022480367986_285076672834646277_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=f4UhVTjBZgEQ7kNvwGOOBt_&amp;_nc_oc=AdrpoWnaPYx-HYQZGJfquVnFdQAqDjV0wIQcBRwnpERS1EDyaEIBt_V73gsPGRPA808&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=xQOJMwmunWfLy26Iy2vnNA&amp;_nc_tpa=Q5bMBQHfYXY7C37YJ9ibR-I5m0YuLEBRhYddQWRlEPS3fsIQ3SBGNHoi9LoTVnBCpf3irRd51nPilbfvig&amp;oh=00_AfyWjUBcO6FTzyHUOlLYKJGOTJqM5Fj08-ydxtfEI6Z3eA&amp;oe=69C5AAC0" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 16, 2023 · 2 yr ago</span>
-      <span class="reel-er">5.815% (followers)</span>
-    </div>
-    <div class="reel-stats">1,813 likes · 12 comments · 225,298 views</div>
-    <p class="reel-cap">“🐾 Dog Ear Care 101: Expert Tips &amp; Tricks 🐶  👀 Keep an eye on your pup’s ears! Don’t miss out on these essential ear care techniques to ensu</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/Ctj6lN5s7AY/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/628277260_18087184538515068_1747984146854601064_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=UeQn35eXEhMQ7kNvwG2S41X&amp;_nc_oc=AdpmdqbaStA1bx78ZkPUWpju56DVYGx9AZtzYD1fxhtmm1FBUorq2gQ-1PaOFqMwrJQ&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQF6PWkCED-C9I9D_LOCCHZdXGQdVEFfTtLYh4fxuuNoPYOTyUxOfE95DAiamH9dZA00TRPD78qBQw&amp;oh=00_AfyXU_lp4ib-mYy7wdovr9n5pdZb7-SssKi-DN1c7xYE0Q&amp;oe=69C5B5B3" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 04, 2026 · 1 mo ago</span>
-      <span class="reel-er">29.163% (followers)</span>
-    </div>
-    <div class="reel-stats">11,492 likes · 193 comments · 222,941 views</div>
-    <p class="reel-cap">Most Labradors in India are overweight… and owners don’t even realize it.  A healthy male Lab should not cross 36 kg if you want him athleti</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DUVjkjhE9f9/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503038739_1044907223746772_2100442892667235607_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=100&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=rra1kcQwA8IQ7kNvwGvg2JZ&amp;_nc_oc=AdpNu7Od5O2gKT4L-GKn04_1N9jYLk7gzOugUPN0hT85CWudTvD-vNhaUR81hJbtk9o&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQG0QMKN6FXlPfd6ppsmCoQPeFEzQ9n0YbNJ5epxlHL4P-JpksTMAIVvBkxpB6PqkuXzjgt_ykw2Zw&amp;oh=00_Afyyfbitqa7w8JserNHyhpZ3WV4iSM4J5TdrMZNKEe-bMA&amp;oe=69C58CF4" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Oct 29, 2023 · 2 yr ago</span>
-      <span class="reel-er">34.91% (followers)</span>
-    </div>
-    <div class="reel-stats">13,474 likes · 98 comments · 218,249 views</div>
-    <p class="reel-cap">How to Help Your Dog During Diwali:  - Create a cozy, quiet space 🏡 - Provide toys for distraction 🎾 - Stay calm and avoid shouting 🤫 - Cons</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/Cy_ioAqyU1Q/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/631813468_1483224260110995_5965234915809919766_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Ajhsi2ezJ58Q7kNvwGlSYux&amp;_nc_oc=AdptoK5Duw9hRrdRVAUbRoAzbKOlqDP2x41rHduG3TrVWJL2AHR7y98H226UoCKqYSE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHe0407Tfe7NNvnFq0sZPgdGMNn5sQoMwK6uCKNnk1OKBep3ZZZjIxQ7WCCRblnEusPOs1eKaluqg&amp;oh=00_AfxVJx2YPnQpCnWHRPJHuR6ssh2-hUbkhj8eKzrCpW0umw&amp;oe=69C5B61F" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 18, 2026 · 1 mo ago</span>
-      <span class="reel-er">15.114% (followers)</span>
-    </div>
-    <div class="reel-stats">4,720 likes · 254 comments · 216,342 views</div>
-    <p class="reel-cap">🐶 Mental stimulation is just as important as physical exercise for dogs.  Walks alone aren’t enough — dogs need brain work too! 🧠✨   Simple </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DU6LTA2k3Hg/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503074236_1222111269452130_5243972061805662225_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=0KlUEA7WZiwQ7kNvwFT5ddk&amp;_nc_oc=AdokleeBVVeIY47fgS2J3gYxIBIktLs2rC-WR5We2ICqAsVX8HxtaQD0Mmz8m3rObHM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&amp;_nc_tpa=Q5bMBQGD3yFXYhB-VPiOOT0EzoMjx4OHXvOFeOJKvj6U843YO7jJTntQPmjrENK_FOqlVWMTl1y9y9rp4g&amp;oh=00_Afw38RXt_XBmqoKhR4qd66PTp3wS1Ikr9utKflvGxEwCWQ&amp;oe=69C5B1C0" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 15, 2023 · 2 yr ago</span>
-      <span class="reel-er">40.244% (followers)</span>
-    </div>
-    <div class="reel-stats">15,590 likes · 315 comments · 178,021 views</div>
-    <p class="reel-cap">Is feeding stray dogs illegal?   Article 51A (g) urges compassion for animals, yet everyday scenes of dogs barred from lifts and people proh</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C04mCQTywiR/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/500717650_1012459297731977_7866390669342641862_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=8V9Qpv7-QboQ7kNvwE0fzD8&amp;_nc_oc=AdrCRXX_eEOcPcpXxaA3-moEWqxyh7SrQhqkxfi1FVs6Jx_6421BoaPIPov36ScWuvk&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQEfLG9h1ud5ANTJGjhNTdnk6KOJuNjVIXdVj52ys7tpYDLE0ypWKWFcy7hzH0MVPzOowB0i-U9vBw&amp;oh=00_AfwfgTtWJ_hwbqr6zaMFmzsqQvz_qeyCvUyTkVTn_ta67g&amp;oe=69C58380" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 24, 2024 · 2 yr ago</span>
-      <span class="reel-er">16.88% (followers)</span>
-    </div>
-    <div class="reel-stats">5,739 likes · 80 comments · 168,191 views</div>
-    <p class="reel-cap">5 Super Fruits to Keep Your Dog Cool and Healthy this Summer!  Summer has arrived in India and it’s time to take extra care of our furry fri</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C3vX2Lcy-nK/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503057113_1460988511753759_2671119726034763672_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=jvLO18B0pAMQ7kNvwFzTnSD&amp;_nc_oc=Adp2lLhrbbYQjuqMUiW_tIoy6q3HVV3fwm3CKZa_qI32_rodIf1BqthN7nTFOyXR7Lk&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQFioSRq3nM1upK2IGH0ihhJBhoKqUmudRzuad4Ap_l7PBsG8sg4cuODI12nDuAnaLVzyLhfIGTdpg&amp;oh=00_Afz1AZl4tm_VyWmzxSYxxVzNKVLU60tvpy8lUB4FK0N2VA&amp;oe=69C59F15" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Dec 26, 2023 · 2 yr ago</span>
-      <span class="reel-er">5.051% (followers)</span>
-    </div>
-    <div class="reel-stats">2,020 likes · 22 comments · 158,083 views</div>
-    <p class="reel-cap">Learning few safety tips from this video. A big dog attacked a passanger. Not sure what exactly is the story behind it but it is necessary t</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C1U5OpGy01W/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/503919532_1258231656015859_5973136858692049892_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=111&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=kegccn8D7TcQ7kNvwG2I_1b&amp;_nc_oc=Adoc6sf3rnZWLvD4PPfPDYglelVVUrGvSfduNN-nfhiiLL3EU1qLPpKrV4bUPJPA0xs&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQErqGV9HQ-rNlxqrb3FQeUI89mTc1c4bW7jr5gDEH-zMgKK5kMJbuHg2HNztR5MAhTwvk8oVm6biw&amp;oh=00_AfyV03KciSNxYcAHKWyY0OSlOPrWfV6Wtg8K_Pl87u7cJA&amp;oe=69C587A7" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jul 02, 2023 · 2 yr ago</span>
-      <span class="reel-er">18.297% (followers)</span>
-    </div>
-    <div class="reel-stats">6,049 likes · 32 comments · 130,220 views</div>
-    <p class="reel-cap">🐶💪 Fuel your German Shepherd’s journey to health and happiness!   🥩🥕 Providing the paw-fect diet tips and tricks for a strong and shiny coat</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CuNHrrlRvSG/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/641772477_1667883367979397_345896404501106408_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=8YNZGiyt_a8Q7kNvwHGYkwT&amp;_nc_oc=AdqxxDwBaLUxOBf0pwDl93RX0PucANClHkTDYAW4RGqD-ksXNnWeQqS8zb3b_r5_ysg&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGtzabmCmlF_2xxv2nw0ZpAHVFeIkshdpKzW-1GChLD25QmOSVUwEKYyoHAY7Zphxr59nv9m_cNsw&amp;oh=00_AfxF0xKnwW4fPfsVUHtTPat_S7_99bG514L9TJvgSsj30A&amp;oe=69C5943E" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Mar 05, 2026 · 16d ago</span>
-      <span class="reel-er">11.237% (followers)</span>
-    </div>
-    <div class="reel-stats">4,054 likes · 33 comments · 129,258 views</div>
-    <p class="reel-cap">Keep your pup’s brain buzzing! 🐾 Hide treats in a towel, twist it up, and let them sniff and solve. A mentally tired dog is a happy, calm do</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DVgU7Bkk_mq/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/500482023_1035862054721099_913854040609528763_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=TEcLTkz_pQMQ7kNvwEJLzt6&amp;_nc_oc=AdrdyntcPkZEvyvxwL1bdSsPiS0qodCzFswsxGjly_573HZEG3MF7MzWmUZUkOnvjME&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQHKAxvKOqdwoOFeEuE7-KzN-8xLagYFTzX0dsLhTY4mD8dUVjOHtinNsIRjOAAE65_g2ZMYt6F1CQ&amp;oh=00_AfzlfjK_xFo8lAxWcZuUBn4HAnXOkNI9_FxHHRmkWhL5dw&amp;oe=69C5A924" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 23, 2023 · 2 yr ago</span>
-      <span class="reel-er">2.995% (followers)</span>
-    </div>
-    <div class="reel-stats">914 likes · 49 comments · 127,990 views</div>
-    <p class="reel-cap">🥩 Fueling your Labrador’s health and happiness through proper nutrition! 🎥 🌟 Discover the ultimate diet plan for your beloved Labrador retri</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/Ct18vQqgx1W/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/497806574_1239867577528355_483808906353330022_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=YNCZJi5tIyUQ7kNvwGtP4ft&amp;_nc_oc=Ado_DDC0ZJqzhZ3twYdFXZDQEfkcHuXfruyoGZh76v-M6d48KWnVglMk51rHtOZC1dE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=mwO1_mp-TfQ806yzSg2CqA&amp;_nc_tpa=Q5bMBQFDjypLUVxlxZWL-SGtHYeSnJXpAQ6hzkGBIpNs3z84UruFvZdU2lqvfrRRq1kaXwVIb5bGq0bGtw&amp;oh=00_AfwYYvrC4b32afXDE38wofUnMvmss6C-Fme1LbQ3R_p48Q&amp;oe=69C58950" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">May 13, 2023 · 2 yr ago</span>
-      <span class="reel-er">10.301% (followers)</span>
-    </div>
-    <div class="reel-stats">3,891 likes · 72 comments · 126,262 views</div>
-    <p class="reel-cap">Helping dogs thrive with confidence and comfort. 🐾 Gradual alone time training for happy pups. 🏠 Creating a safe space they’ll love. 🐶 Posit</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CsLzXWUJ3JP/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.75761-15/485667283_18052587779515068_3073258310569551637_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=mr5UHWR0Q2YQ7kNvwHktzH7&amp;_nc_oc=AdoLV32-YnjYRAc4YcvQ0N_ndkE_lcN4JJDxmJeQbnHEN01b6OoMD67PDduk76Tm5kA&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=LC6JoiJQkIU4fj3NTdhvzA&amp;_nc_tpa=Q5bMBQGSBxeEW99fa5nbBMGDF1TDLL6XP1X7VY4dB055Efaq2tuFAZzWrP2zCQu3YBgymDSu6rIBQry3TQ&amp;oh=00_AfzqU_bMqyLn5nCk_5bUsGj4sRL_yzf6ZOVh9_WkvHXIkg&amp;oe=69C588B1" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Mar 21, 2025 · 1 yr ago</span>
-      <span class="reel-er">10.468% (followers)</span>
-    </div>
-    <div class="reel-stats">3,583 likes · 180 comments · 125,345 views</div>
-    <p class="reel-cap">Shih Tzu Owners, Take Note! ⚠️🐶  Here are 3 crucial things every Shih Tzu parent must know! ⬇️  1️⃣ Breathing Issues – Their flat face makes</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DHdjaDxyJ4B/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/538379554_18069048110515068_2937368656216530421_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=100&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=-R4mFCwx2e8Q7kNvwF_rk7X&amp;_nc_oc=Adq9SHx6KvFRMveoEW6KLNUZiFpidC2Fkln9DzkSqapZ_JOx_jmvjDmqJBiFvUpOkM8&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=_LNhtLSlXTdOVJfjFF_7Gw&amp;_nc_tpa=Q5bMBQEn2ti_eoP6AN6pDCKBpWWAToWskxFg1sAihTa6omASn5NNx_D5d3DFjqUk-6dAp_ed4qCX6Tco9Q&amp;oh=00_Afw19A9gEp1aTpMh2dWsKlMJ8KjZ3pVOpEWmI1FkWmQ_Wg&amp;oe=69C58F22" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Aug 23, 2025 · 7 mo ago</span>
-      <span class="reel-er">15.709% (followers)</span>
-    </div>
-    <div class="reel-stats">4,793 likes · 717 comments · 121,836 views</div>
-    <p class="reel-cap">Dog bitten by a snake #dogbite #dogsofinstagram #doghealth #doglovers #petcare   Did you find the video helpful?</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DNtPqKhZoCZ/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/499401313_1018215933749793_1585325382681433774_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=4rrcH-Lx0nkQ7kNvwE4I0p5&amp;_nc_oc=Adr3i2BS4lFIerLX9BRABCiS9lcqi6vJXMpYWd4meQ7e5cxQOzxxZIEyIU9eGddBAJA&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQGivneCFFFGAf668LoBFT0sg8jE1Yh85pQIRbF4WYVFRynXu7seM1XIC0dNuQn3hEMa9O1OIBdSDA&amp;oh=00_AfzKTnBTFdQFNt3w-M6VcKYInzk-YELSrMuioN-ETQucVg&amp;oe=69C58004" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 21, 2023 · 2 yr ago</span>
-      <span class="reel-er">1.903% (followers)</span>
-    </div>
-    <div class="reel-stats">694 likes · 17 comments · 119,230 views</div>
-    <p class="reel-cap">🌱 Advocate for Healthy Pups! 🐶✨  🥛 Exploring the Truth about Doggos &amp; Dairy 🚫🐾  🍼 Unleashing the Facts: Milk &amp; Bloating in Canine Tummies 🐕💨</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CtwzXEIs8MV/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/532273593_18068209037515068_8365000122250204039_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=104&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=_u-lKWz2ZiMQ7kNvwHTQHrh&amp;_nc_oc=AdrdmxjBFFgHyEkTijU4aI69FNEbihWih6lYGW7y3lw-DFLgWfqP1y2v5TQO7QL3DCc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=_LNhtLSlXTdOVJfjFF_7Gw&amp;_nc_tpa=Q5bMBQHRuUj6vWQ5LsU6S6-qZaQQ5UoZTvETW5-tDVTcV7VOP8y5MsyGCkQX-Joe_PiY_zg6aa8gWK_Vuw&amp;oh=00_Afy7GMGAzxCHOf3QyqTjOpmh8Qk5hJ1bnnTg6XIa24G64w&amp;oe=69C5AFBA" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Aug 15, 2025 · 7 mo ago</span>
-      <span class="reel-er">14.541% (followers)</span>
-    </div>
-    <div class="reel-stats">4,571 likes · 14 comments · 112,196 views</div>
-    <p class="reel-cap">HOW TO CHECK DOG’S PULSE RATE ? • Locate the femoral vein which is present in the inner thigh region • Press it gently and count number of b</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DNYbQXSyA26/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/499048729_1891941224902171_488628051405201686_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=XAdQfoxhvasQ7kNvwE3X_CJ&amp;_nc_oc=Ado1UOp3BL_wXN7cJ5zw1JEbbqmakYDoceDhgmHzhhAcxzdPIMk2XM19Qnr4wLLHNgA&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQHehfiD3DXLecSQO60XP44Y0LPlhPY11oPEYrz8AYVZDtZtFXJ8zM6DtYmtEulOOKQJgr1Qdl-gxw&amp;oh=00_AfzmFtde3j8deDPE3bePpIBAWwmrqhai9CGK2ipyfvLq0Q&amp;oe=69C5806C" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jul 04, 2023 · 2 yr ago</span>
-      <span class="reel-er">2.332% (followers)</span>
-    </div>
-    <div class="reel-stats">895 likes · 24 comments · 111,358 views</div>
-    <p class="reel-cap">🐾 Wagging Tails &amp; Wellbeing Advocate 🌟 💦 Hydration Guru | Salt-Free Superhero 🚫🧂 🥦 Nourishing Dogs, Body &amp; Soul 🌱🐶 💪 Promoting Healthy Paws </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CuSRYGftwh2/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/502998798_2283359728789789_1562977799895127521_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=doKwcFv19gcQ7kNvwEZS3Z9&amp;_nc_oc=AdrJl27eQSMdViFlwUyykOELRhgY37n-4jgl9zxTKgfjPr0LnWVU3NTIZRicPzX2xo8&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQHaTPy6GprgJJPZlhqSx9a2NCJwF_PjJGQV_7qQxM_AzZbfgrlPoeyqRbYzMU0AYtoVRJONMXDjbA&amp;oh=00_AfxyTOcwn27R6W906xaJq3HoxwCzEUvPGxU5VwKTDuV55A&amp;oe=69C5AC04" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Mar 12, 2024 · 2 yr ago</span>
-      <span class="reel-er">6.89% (followers)</span>
-    </div>
-    <div class="reel-stats">2,758 likes · 11 comments · 111,049 views</div>
-    <p class="reel-cap">Going on a road trip with your furry friend?  Remember these 3 important things to keep them safe: use a pet seatbelt or carrier, secure the</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C4bJUsRyC9Q/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/501824557_691560950517260_5880775243835096059_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=_qGs3hzbH2cQ7kNvwH1-NHK&amp;_nc_oc=AdpjsUs3NpS63WhEIxLjUDqOAWRyklCZzKUkc3FuKuXLo8Qkc-wFf1Ehf7Z41PA7uLk&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQGWjYBSs4w3Yz8kBjs8veSO41jRwilaQGdLJ7pO6FY76etdRtCtUfNVByZ96ZwteuDbDYqUflpeyQ&amp;oh=00_AfwJYsmv4BFK13Dxp-1qsMt-CSDTYHfqPoUbpgscJrNyfg&amp;oe=69C5A9BF" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jan 13, 2024 · 2 yr ago</span>
-      <span class="reel-er">9.067% (followers)</span>
-    </div>
-    <div class="reel-stats">2,177 likes · 22 comments · 107,188 views</div>
-    <p class="reel-cap">Part 2: All about Dog vaccination.   In this video I have talked about the vaccination schedule for a puppy.  Share this video with all the </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C2DOeVvSFVe/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.82787-15/627208315_18087372977515068_2977977592987608955_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=4aol6AKAITUQ7kNvwE5w7ca&amp;_nc_oc=AdpWxFEDGJYy0GS2muUMv7Iyo-BmsstpgTYWXAq1Ks43jqJcqVRXTd2DrYOX4HBWtfc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQE4y2S1QExpE-PmIdF3mOoP0ZK9LLnvbaXuX4qn3lI10mbzYeNNcj3i0gFtHVLH5oZ93LDHea2Azg&amp;oh=00_AfxOsdtmbWiNoXEEcYhJQKbfscLZKIeVoAuemL2sIJnNHw&amp;oe=69C5917F" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Feb 06, 2026 · 1 mo ago</span>
-      <span class="reel-er">18.685% (followers)</span>
-    </div>
-    <div class="reel-stats">7,738 likes · 30 comments · 107,105 views</div>
-    <p class="reel-cap">🐶 Sometimes dogs notice what humans ignore…  A pet terrier reportedly helped save its owner’s life by drawing attention to a serious foot in</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/DUa4I4pEx5l/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/500366370_1221132489809753_78006802214924210_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=yBnBaqAJ4kIQ7kNvwFKHQlH&amp;_nc_oc=Adrxoj3qhqRtSyL44-0rv1LqHwA_FSvOrCUeCwfGZQb3v4m8ongMAfxy5AkZRY1PEBw&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQF_HNSH575XVRaEw1YHvBx0qsdjgHxA5daD4u2eNEQ0g364XyV2-H2g1uIO8OsBLLbMsrxQ8pyS0g&amp;oh=00_AfzVKkmvwTauYS-pdSA-DRJInFhx0BxEXJvb7fInFFxlLw&amp;oe=69C5B3FA" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Aug 11, 2023 · 2 yr ago</span>
-      <span class="reel-er">6.777% (followers)</span>
-    </div>
-    <div class="reel-stats">2,399 likes · 72 comments · 106,778 views</div>
-    <p class="reel-cap">🐾 Helping Paws and Happy Tails 🐾 🍞 Gluten: Friend or Foe? It’s a Breed Thing! 🐶 🔍 Exploring Canine Diets: From Labs to Shepherds 🐕 🌾 Unravel</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/Cv0H0WyOZzV/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/502766842_688386203992170_6683124307384040730_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=EJ8AlbI494QQ7kNvwEzKZtj&amp;_nc_oc=Adpl6O-JEGHbqieqpXR7Ef6SaBdYPXOfxadzpi02sVlDNY75xwe2E3R-tD7KAUmd0B8&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=TenIbouvu-sdgJHZXPTBFg&amp;_nc_tpa=Q5bMBQEXRpfH8kSNasv0vZGS1ctdxRTvc_7QbsK_Wm2G-tNPiGQ0TVh4TGFgJiPIo-zOTqX_TP2sChxRhQ&amp;oh=00_AfxcVwysqPdjbn7ANda_R4aNtQcNa3_Pf1wMKaXoX2YZVw&amp;oe=69C5ABA0" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jan 12, 2024 · 2 yr ago</span>
-      <span class="reel-er">10.535% (followers)</span>
-    </div>
-    <div class="reel-stats">3,283 likes · 16 comments · 106,178 views</div>
-    <p class="reel-cap">part 1: All about dog vaccination   This video talks about what are the essential and non essential dog vaccines. Share this video with all </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C2Aqrz2SpyX/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/497777747_1378303650034574_6815981146686236978_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=oDLMaR9SmwIQ7kNvwFZDxB9&amp;_nc_oc=Adqx7Lcm32S107BI43xN9X9i3xv5h99xiABCYW7Y8mH20dPKWF1ANAVCLIZmOOT3s2k&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=MO62qoZeWOhshnScOgr6ZQ&amp;_nc_tpa=Q5bMBQGDp6HARD5NIuYo8gNRR9F674deGiVFGHkBavPWQV0N-54yM_jlNPlWiv7I3nuQPSE_FoChjRMjRA&amp;oh=00_AfySd53Jxbi4QrUdSUgadFKUyjeNGnI6yQ8H2Z1WgLp4Vw&amp;oe=69C591A8" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Aug 09, 2023 · 2 yr ago</span>
-      <span class="reel-er">2.384% (followers)</span>
-    </div>
-    <div class="reel-stats">896 likes · 10 comments · 105,415 views</div>
-    <p class="reel-cap">“🛁 Fluff Goals: Keeping fur fresh &amp; fabulous! 🐾 Embrace the Shine: Unleash coat brilliance! 🌟 Glow Up Guide: Say goodbye to dry skin! 🐶 Wag-</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/Cvu-SxerJU2/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/497585010_690713090207823_7845517707330744887_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Nu_-8DNZ8n4Q7kNvwEKlPlF&amp;_nc_oc=AdqIS-CpGJ_nvTrwldCGJxGZKTmXh03c0HAX3PFrUxRfhZ8HFIrPW_oQd4Y8oDQcQHQ&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=mmp95XBWlS_hmH-CNz8XCA&amp;_nc_tpa=Q5bMBQFGxkzGe1uN9TBwoeZraR_LjLnUmAvtctoPH4LmZGLdJ_4joTha4aq8cTHt8g0PzAv3yufU_jgu7Q&amp;oh=00_Afxa5KDLfM8F42zgo_PDn-rgQyTjSAfsL4b68ggqfUnpfQ&amp;oe=69C584B2" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 15, 2024 · 1 yr ago</span>
-      <span class="reel-er">11.435% (followers)</span>
-    </div>
-    <div class="reel-stats">3,642 likes · 64 comments · 102,686 views</div>
-    <p class="reel-cap">Attention all dog lovers! If you have a larger breed like Golden Retriever, Labrador or German Shepherd, this video is a must-see. In India,</p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/C8PxhW3SxNd/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-
-<article class="reel-card">
-  <div class="reel-thumb-wrap">
-    <span class="reel-badge">Video</span>
-    <img src="https://scontent.cdninstagram.com/v/t51.71878-15/500683510_1002401585378663_4403340433785874068_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=104&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=tA06z_W1eacQ7kNvwG-jI8X&amp;_nc_oc=AdrPprrwfcyT0sIOsz8stntn7Q6SNTch-hVj8JfmMxLKtSnqsKnfYa1FKufImv3bFVI&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=xQOJMwmunWfLy26Iy2vnNA&amp;_nc_tpa=Q5bMBQEK1Cy8JFyDatinAKurehygFufdE_3S371s-5zimbkKS23Apz3mg6sM7fIL4qGLrYNyl3lwZzRT_Q&amp;oh=00_Afx6ia6d1bHnvgm5MK0oiuoz6e1OlvV8tfTpFPu-Y6CFCw&amp;oe=69C5B69E" alt="" loading="lazy" />
-  </div>
-  <div class="reel-card-body">
-    <div class="reel-meta-row">
-      <span class="reel-date">Jun 06, 2023 · 2 yr ago</span>
-      <span class="reel-er">4.881% (followers)</span>
-    </div>
-    <div class="reel-stats">1,772 likes · 17 comments · 91,327 views</div>
-    <p class="reel-cap">“Exploring life, one paw at a time 🐾 ✂️ Dog Nail Care Tips: - Mastering the art of safe nail trims for dogs 🐶 - Avoiding the dreaded quick: </p>
-    <a class="reel-card-link" href="https://www.instagram.com/reel/CtKMTh2uBC3/" target="_blank" rel="noopener">View on Instagram →</a>
-  </div>
-</article>
-</div>
-
-      <h2 class="section-title">Top reels &amp; videos</h2>
-      <div class="top5-bar">
-        <label for="top5sel">Top 5 by views</label>
-        <select id="top5sel" aria-label="Top 5 reels by plays or views"></select>
+  <main class="wrap sections">
+    <section class="card" id="about-founder">
+      <h2>About the Founder</h2>
+      <div class="founder-layout">
+        <img class="founder-photo" src="assets/founder-tarun-upright.png" alt="Tarun Sharma with a dog" loading="lazy" />
+        <p>
+          Doggo Pokko is led by Tarun Sharma, who holds an M.Sc. in Chemistry and a Level 2 Dog Trainer
+          certification from Amruth Dogguru, Bengaluru. His lifelong connection with dogs now drives a mission
+          centered on responsible pet parenting, informed training, and meaningful canine awareness worldwide.
+          Tarun is recognized as India's first dog influencer.
+        </p>
       </div>
-      <div class="top5-card" id="top5detail">
-        <img id="top5img" src="" alt="" />
-        <div class="top5-body">
-          <div class="uploaded" id="top5date"></div>
-          <div class="top5-views-er" id="top5viewsEr"></div>
-          <div class="eng" id="top5eng">—</div>
-          <p id="top5cap" style="margin:0.5rem 0;color:var(--nf-muted);font-size:0.9rem;"></p>
-          <a id="top5link" href="#" target="_blank" rel="noopener">Open on Instagram</a>
-        </div>
+    </section>
+
+    <section class="card" id="services">
+      <h2>Services</h2>
+      <p>Private, one-to-one obedience coaching designed around your dog's temperament and your daily routine.</p>
+      <ul class="service-list">
+        <li>Come</li>
+        <li>Sit</li>
+        <li>Shake Hand</li>
+        <li>Down</li>
+        <li>Roll</li>
+        <li>Stay</li>
+        <li>Leave</li>
+        <li>Heel Walking</li>
+      </ul>
+    </section>
+
+    <section class="card" id="instagram-metrics">
+      <h2>Instagram Metrics</h2>
+      <p>Selected performance indicators from Doggo Pokko's latest Instagram engagement data:</p>
+      <div class="metric-grid">
+        <article class="metric"><div class="label">Followers</div><div class="value">43,045</div></article>
+        <article class="metric"><div class="label">Sample ER</div><div class="value">14.717%</div></article>
+        <article class="metric"><div class="label">Avg Engagement / Post</div><div class="value">6,335</div></article>
+        <article class="metric"><div class="label">Avg Reels Views</div><div class="value">155,941</div></article>
+        <article class="metric"><div class="label">Avg Reels Likes</div><div class="value">4,551</div></article>
+        <article class="metric"><div class="label">Avg Reels Comments</div><div class="value">100</div></article>
+        <article class="metric"><div class="label">Top Reel Views</div><div class="value">5.55M</div></article>
+        <article class="metric"><div class="label">Top Interactions</div><div class="value">166,198</div></article>
       </div>
-
-      
-
-      <h2 class="section-title">Recent posts (table)</h2>
-      <p style="margin:-0.5rem 0 1rem;color:var(--nf-muted);font-size:0.88rem;">Most recent posts in the sample; order is by views then engagement. Top 5 above uses account-wide fetch by views.</p>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead><tr><th>Preview</th><th>Type</th><th>Posted (UTC)</th><th>Likes</th><th>Comments</th><th>Saves</th><th>Total eng.</th><th>Link</th></tr></thead>
-          <tbody><tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/602377962_18082283711515068_5797965261900340521_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=8YABHif5ma0Q7kNvwH0R8aW&amp;_nc_oc=AdoOjgOLO2gSy-L0KvzU9m-YHlCF4ZmArv8ssKT2YTXstycxihnNT-j-z_VYe003l8w&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQG1__9Om75SzqQjhpQqmQajynf2l8HHQdP4OTT1iHZNAdqdDCla9evSsSxT75b2LpJyI_TW5h5c8w&amp;oh=00_AfxWlijD4AMGVXEdZnfv7LjVxK-yXFPnwxstXJYRF4k5Bg&amp;oe=69C59E73" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 19, 2025</td><td>90666</td><td>2316</td><td>5796</td><td>98778</td><td><a href="https://www.instagram.com/reel/DSdKcKFEwjC/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/641334343_18089359736515068_8458820212192222093_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=80BEpx5emXkQ7kNvwFey55_&amp;_nc_oc=AdqoT4LATbGp_ZbBaJPDlsc78Jx8LHv8VTaJLYQzxyY9y7GFGWILs7dIy1iGCrbhed0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQG3FJHh7gJs4fCKIlspxu-aoO-_qmWxP-cRfSAqZAxVo36o9Z7RWeWmUqFua6WoKDzERfyVP9kevA&amp;oh=00_AfwmirFHzXg8MCJKnFYFLkfbxJQvt4xgrFz2mOWyKFmJ-A&amp;oe=69C58B99" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 26, 2026</td><td>14864</td><td>95</td><td>2196</td><td>17155</td><td><a href="https://www.instagram.com/reel/DVNj8TsEy4Q/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/629702182_18087581483515068_4657327852712477859_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=n9-bsV0coD4Q7kNvwG5Ok1b&amp;_nc_oc=AdoMdUA9MYQxcmABQouTACgLbVH3_Dbzzq6smVanKVmDQtx9kd-lNBj0Yo89fswwps0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGenc7s2GJYE5cO72zPGzxMqF576ZhEQYOM7Tb9NolYQHalTBTp-HKngRQgzDCp6abBEuBCn8bv7w&amp;oh=00_AfxNfszTNScwzOjVG9rptC-xESLIXex_CbZe0oOzsKKLag&amp;oe=69C5A0AA" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 08, 2026</td><td>40021</td><td>152</td><td>13259</td><td>53432</td><td><a href="https://www.instagram.com/reel/DUgQYYrE5u0/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/632352204_908415802140570_5211886789845816550_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=UtHFgu9AQHsQ7kNvwGazWtQ&amp;_nc_oc=AdoLvHczmPtPQtB62DPX5McF0owvCP44jhm1aM_Fist30MddIAzKHa6tPyl9MFF0U1g&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHTYF_WJfbuh6kv4Vc5l4b0uokwICM7jdF1rLKl8LPR4ZBGTzC8DjOMqg9REgGkc8N9uMWDtgEHOw&amp;oh=00_AfylugYkekaq6gdMszDqp31ZxxHGVEC9IgxtHWM7iQP0uw&amp;oe=69C5A9CC" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 16, 2026</td><td>22071</td><td>512</td><td>1896</td><td>24479</td><td><a href="https://www.instagram.com/reel/DU1C74qkwhS/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/617605374_18085029425515068_2433256006798984542_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=3QUg5hHlXQQQ7kNvwHUl2Uc&amp;_nc_oc=AdpX2rZOqSXynjcdLKleQlAP22K3nBRI9NWJpFI_CqgFhdF58dHOCsEhWbi_rauIYDk&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQHE2No_fQbqcog3VNeM9m-kCD6yphxuPgGqywVhodAunWAnVDepFq6BCIZoDMoZzYWtEDV3XOBaNw&amp;oh=00_AfxQg4663zozcjUto006sWe98AusFUD_hnQcyX1qUrfHZg&amp;oe=69C5A508" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 15, 2026</td><td>53750</td><td>8215</td><td>1769</td><td>63734</td><td><a href="https://www.instagram.com/reel/DTiGSewE92l/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/628277260_18087184538515068_1747984146854601064_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=UeQn35eXEhMQ7kNvwG2S41X&amp;_nc_oc=AdpmdqbaStA1bx78ZkPUWpju56DVYGx9AZtzYD1fxhtmm1FBUorq2gQ-1PaOFqMwrJQ&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQF6PWkCED-C9I9D_LOCCHZdXGQdVEFfTtLYh4fxuuNoPYOTyUxOfE95DAiamH9dZA00TRPD78qBQw&amp;oh=00_AfyXU_lp4ib-mYy7wdovr9n5pdZb7-SssKi-DN1c7xYE0Q&amp;oe=69C5B5B3" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 04, 2026</td><td>11492</td><td>193</td><td>868</td><td>12553</td><td><a href="https://www.instagram.com/reel/DUVjkjhE9f9/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/631813468_1483224260110995_5965234915809919766_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Ajhsi2ezJ58Q7kNvwGlSYux&amp;_nc_oc=AdptoK5Duw9hRrdRVAUbRoAzbKOlqDP2x41rHduG3TrVWJL2AHR7y98H226UoCKqYSE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHe0407Tfe7NNvnFq0sZPgdGMNn5sQoMwK6uCKNnk1OKBep3ZZZjIxQ7WCCRblnEusPOs1eKaluqg&amp;oh=00_AfxVJx2YPnQpCnWHRPJHuR6ssh2-hUbkhj8eKzrCpW0umw&amp;oe=69C5B61F" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 18, 2026</td><td>4720</td><td>254</td><td>1532</td><td>6506</td><td><a href="https://www.instagram.com/reel/DU6LTA2k3Hg/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/641772477_1667883367979397_345896404501106408_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=8YNZGiyt_a8Q7kNvwHGYkwT&amp;_nc_oc=AdqxxDwBaLUxOBf0pwDl93RX0PucANClHkTDYAW4RGqD-ksXNnWeQqS8zb3b_r5_ysg&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGtzabmCmlF_2xxv2nw0ZpAHVFeIkshdpKzW-1GChLD25QmOSVUwEKYyoHAY7Zphxr59nv9m_cNsw&amp;oh=00_AfxF0xKnwW4fPfsVUHtTPat_S7_99bG514L9TJvgSsj30A&amp;oe=69C5943E" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 05, 2026</td><td>4054</td><td>33</td><td>750</td><td>4837</td><td><a href="https://www.instagram.com/reel/DVgU7Bkk_mq/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/627208315_18087372977515068_2977977592987608955_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=4aol6AKAITUQ7kNvwE5w7ca&amp;_nc_oc=AdpWxFEDGJYy0GS2muUMv7Iyo-BmsstpgTYWXAq1Ks43jqJcqVRXTd2DrYOX4HBWtfc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQE4y2S1QExpE-PmIdF3mOoP0ZK9LLnvbaXuX4qn3lI10mbzYeNNcj3i0gFtHVLH5oZ93LDHea2Azg&amp;oh=00_AfxOsdtmbWiNoXEEcYhJQKbfscLZKIeVoAuemL2sIJnNHw&amp;oe=69C5917F" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 06, 2026</td><td>7738</td><td>30</td><td>275</td><td>8043</td><td><a href="https://www.instagram.com/reel/DUa4I4pEx5l/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/649665945_1467670774730993_3822847724079156923_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=100&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=PA_PdoBP_8MQ7kNvwGk7x0g&amp;_nc_oc=AdrDEfk8cQFH7n2RZIQl8Xa89c88Fplf2CcTR4SmJQ_Ickw3CUbIH4GSONutmtwqI9A&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGbf5zzXKAaUQNNKDPwXg-Nf5Ntk9ojfgdZsHgJcDu4JzXeY-1ymyyWQoBdUUfUBhHicrGWMAivWQ&amp;oh=00_AfxC0hIMBwGhn9wJjSYL27JD9O0LA7-PfvsV7fINw04LBQ&amp;oe=69C58CCC" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 08, 2026</td><td>1696</td><td>34</td><td>210</td><td>1940</td><td><a href="https://www.instagram.com/reel/DVoarhVk_qf/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/642432597_18089903177515068_11991843037134217_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=IVDSgP9qB2sQ7kNvwGEOYSk&amp;_nc_oc=AdqrGrFN-HnKNNYLQOmKvjja8C08HbI-B5L5OoZSnnBWpo38EhbXN7zFjOl0BTZBnlo&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHgNbmPWDVjDpUgfcXCTeVsbnA2IaMiA8D4mtD6ERKkfW7N6aR2nm039Z7IfkTKA-ErNSKG6-tHMg&amp;oh=00_Afycz18cq57ZgO460hkaRtFn6YHTlEiBIM21drgQwH7ToA&amp;oe=69C59A61" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 03, 2026</td><td>2024</td><td>26</td><td>427</td><td>2477</td><td><a href="https://www.instagram.com/reel/DVazeO3E3LI/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/616426544_18085146866515068_4174212016059235198_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=ODdG3mzjUdQQ7kNvwFDSIvy&amp;_nc_oc=AdrkOfTMdpE3VKz0i9kpylgvvsfwD2GHUVTlJvNu7QIpSLOsR8DULZk4xa2kiYAnboE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQE_TIS7qpSiCGLeabyehKI7tt4N5-Uzsl7lQegfOUhALy0q61bsCx_GTijgSNCsa9iz4iO-agb0IQ&amp;oh=00_Afyvgop2Tn85XcA-CgFduhd2ZsD1WfhMS28bwYOiMo0ZwQ&amp;oe=69C58F72" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 16, 2026</td><td>1847</td><td>65</td><td>206</td><td>2118</td><td><a href="https://www.instagram.com/reel/DTlDjEzAehs/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/639854877_18088913696515068_1151701134477677665_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Tm1j4Oz9QgQQ7kNvwEOv_TL&amp;_nc_oc=AdrZSL9yWEr_pkXSSiK954NfvvTJ71oIkgtRcvd41ZoYw6efuLOs58OLBlW1qA6BsOs&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQFjzLe10m6Tn6O9uWhMCIfDmjoDCNQSzGvIAz_wjypVbMpK1v7t7zSCFDn9T20wGO2-KAa-W8Kt0g&amp;oh=00_AfxhLfS9zEq_BGkyzuuwe-T0lxAtXa1wrpjbonr0mgnj-A&amp;oe=69C59DC3" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 21, 2026</td><td>1526</td><td>41</td><td>126</td><td>1693</td><td><a href="https://www.instagram.com/reel/DVBhy3hE6uq/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/606883197_2086376332118163_1263514076955791427_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=ZWGY4_yBSfwQ7kNvwGrtL_I&amp;_nc_oc=AdqygfbJfEoYWuWSFd5vNDOhswzkodKRoxScYiltQ7YVaok5el6bE2eB3_Mtn3RpIjM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQFyV1-yH_RgiWg9zjHlYeOztVtk6JNIkQUyzDOrNCNGT5bnbusmGvrLGpkRsbfoQ9QLsIHIXLErQA&amp;oh=00_AfwjssFQpmX5QPH3MjvqPikibGtjuQzA-hsfMwzEWTQvZA&amp;oe=69C592DA" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 31, 2025</td><td>1026</td><td>47</td><td>57</td><td>1130</td><td><a href="https://www.instagram.com/reel/DS7niDRk4aV/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/653517967_18091789685515068_6420034466081542584_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=SAY5VrrZz2UQ7kNvwEG3-4u&amp;_nc_oc=AdpsrwP-B9-2euevq3fRv4PLvjT4ufeV2V4w1S4aJQBhRb2TQ38GY3V_tiU7ZQUrB_4&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHBQ6Fqn53ZrMGIipfF4pZMX22MgXNw69G7oPJ5iFfY3I3Iz5toZxuqiNkOAwXxSuAG8ylfFkdxsQ&amp;oh=00_AfwwgERuF1O80l0iXdM6ULB02jdszo2XI7ZZotoFaMzDmg&amp;oe=69C595A9" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 18, 2026</td><td>1077</td><td>8</td><td>341</td><td>1426</td><td><a href="https://www.instagram.com/reel/DWBqlEME2cc/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/610829513_18084456587515068_8543408415241067384_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=lXgTrj6ML_UQ7kNvwGNRugt&amp;_nc_oc=Adok7Z7RDqY2aCN8wuued7PIIdO6gqvs_oF0awqFZS0S15v5F3hjQ-WMDsPMg2RNNrU&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQHNV-YeMKmrEPRI3s27EgX4FMSgKscND2JkI9dEvaOt7bYPkizYkkTh5YgerNYW3pn-DzsX8J4B4A&amp;oh=00_AfwpDgOv8Zs8YWVxpFZjz9J5f9BZe0c33xXLQAgZ7xU1lQ&amp;oe=69C5AA73" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 09, 2026</td><td>503</td><td>92</td><td>166</td><td>761</td><td><a href="https://www.instagram.com/reel/DTS_SmLkw2M/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/651792900_1584772182597528_5824995006313261328_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=104&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=wwXnJHfgWu4Q7kNvwFWOaWA&amp;_nc_oc=AdoUT-ARpultwUWD2wPBynCSt1--Bay6ps09CIDza8kjZwFufSvlaqtBJ0XtkWD8kT0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGvwR2XGFmgVUgYQjaWnq9S1GYFSvTt76RN7oOgMBBV3q4eVsWxx7bb-eNqfD9ENfFXHuRLAOEnvw&amp;oh=00_Afy9MnKvFF5FhPBtxtzkC5SHDz-ol4gQ09wy2XRHa505aQ&amp;oe=69C59097" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 17, 2026</td><td>1560</td><td>36</td><td>83</td><td>1679</td><td><a href="https://www.instagram.com/reel/DV_NXtwk9en/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/639506425_18088720856515068_997686568273352837_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=jRMupqkc7ksQ7kNvwFpVNzU&amp;_nc_oc=AdoDyXnwUa5l_Q-lf8rWpxO0rwIp_EVuYES3V_MpB8hR1mUJqSImJTj0LNl59IHm3dU&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGzK5JlCidgcw_-BuJqaEil0ZEMj01YlE4-P1kCwYHLNiYi3XrdA_2Er_PqyLsfuMW7Xn1uViCmtA&amp;oh=00_AfxUAA840PAU6zCSHOHDuEm_jzhzQWhBLEZjB4SofylW3A&amp;oe=69C59143" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 19, 2026</td><td>3301</td><td>74</td><td>68</td><td>3443</td><td><a href="https://www.instagram.com/reel/DU8wm5_E6Ng/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/634051100_18088515200515068_4215900503209375216_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=100&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=yCBPJ7Hfy0oQ7kNvwHSRYCD&amp;_nc_oc=AdqfhQhuOtCBrXItoB17bcSmeFsyrkvNXxDqDzYNGCKYEGzTcr8JuMnWN0F9e21EFCY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQExajZsSVZgUp1qLyYxcnVx9wvwtWKmJb3DCbR9Y7K345E1w_eOZuztnzqtmzCLLbix_-y3BJAm5w&amp;oh=00_AfwIWP_DbEgHsD8vVM7KZ5-5sOJQmv7pG04XR-fdUgXf7g&amp;oe=69C5A52A" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 17, 2026</td><td>529</td><td>12</td><td>16</td><td>557</td><td><a href="https://www.instagram.com/reel/DU3jY8GE1Z5/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/586656615_18079452026515068_8427095789105521718_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=111&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=YemB0F-1jdoQ7kNvwFjpq_p&amp;_nc_oc=AdqhdS-kPkoWwR8Gs8s8hgekJK03qHiBNHxM7GKiKjLSbG6Lx-EioJni3oGK1esBBPA&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQFIZvC9hGB_PK5Y-dAXTVMIP3kl1Ndh5EensBKEpSGEmA_Xcgev8LpYG-0En5hr8mr44mxqGo5bSA&amp;oh=00_AfxW_wMArDLdJeZrVFZXxhyiJnfIVVFtGiBhMq4W-QQhSA&amp;oe=69C589CB" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Nov 21, 2025</td><td>617</td><td>49</td><td>27</td><td>693</td><td><a href="https://www.instagram.com/reel/DRUcxqZk4nP/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/610240828_18083787920515068_5216562992322351418_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=snCXFUxu2F4Q7kNvwFSaHUU&amp;_nc_oc=AdqNsyJ_XCaw9EZZpL_iryTxXRflWgUH5xFA8mLDvk8s0jEN-aHYb2wipNPs-yQ6AR4&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQF8wITRabDV3QRKDWIS5DCbPP0wUyG58FLqGCeYIpca3ed1-qcwyzv1NDM_wTiOrEacIu-I5nOoVA&amp;oh=00_AfwaCnycQpTgAiXBZ7w93uPyvcZzxlJwnKIEHLn4sZQ9iQ&amp;oe=69C593BC" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 02, 2026</td><td>394</td><td>8</td><td>20</td><td>422</td><td><a href="https://www.instagram.com/reel/DTBOMdME0Zm/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/559296723_18074163095515068_7973502422839465479_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=zkoFTBUfuX8Q7kNvwFEwach&amp;_nc_oc=AdrYXrD98Fxdif36WqcYVB1an2GdyoQttZ2Dx1bIK1muCHFrFbuywCNXR7RbW0JEauQ&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQE4NwT0rZGzIL5wfujx2JacrTlHbCzxNUpeSbxhrJtM3Ag3yr9OBNHdoakYhYpSlURdXHAbAYW_2g&amp;oh=00_AfxbMzwtUhHFBp6ATBsRNsSSXSUcOV46Xa9rIx9N_ZhcyQ&amp;oe=69C58BDB" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Oct 04, 2025</td><td>481</td><td>7</td><td>178</td><td>666</td><td><a href="https://www.instagram.com/reel/DPZf1Fck7rd/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/621267403_18085935626515068_3969792094828933786_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=qMmdpKWVQGMQ7kNvwGvJw5S&amp;_nc_oc=AdpGqrD4EWnKGmlMz70pNB_nsao9SHWOtJ_puxCVZNxoarjBP32TgHX9DE3c3VtUJhc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQFInIODkJPwb0qJjvL2W1imHA-j4YNOI-p48VhdndYvlVP1SXEgoP3Eqi47X7I2IdPM1O_SFaJ7gw&amp;oh=00_Afy76PxU9RcTo2FXXz5G26mC-aXYKCA0JPEGQHOzM9ZO5A&amp;oe=69C5AF17" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 24, 2026</td><td>397</td><td>3</td><td>25</td><td>425</td><td><a href="https://www.instagram.com/reel/DT5zSlak__r/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/627075613_18087297938515068_1494570094087499965_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=7ORsVDaOKq8Q7kNvwH3RvCj&amp;_nc_oc=Adpp6zEQfxT6dHZGSVUVc9Bs2TyAtvCGvl2hWwVKxT_OJfXY6NlcYGbnPq8mW2UHMVw&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQE1tRiaUFAmw0qtoSv4gxsjYDMsbfwjeWRq0cwUOZZLHVHNxfOg1wE_i_3YhfFVZoEVS7qs2XkTwg&amp;oh=00_AfwEwU_N3XWVMlmjfkpEHysgt6fUwGCXandYroak7RLa1A&amp;oe=69C5ABD4" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 05, 2026</td><td>382</td><td>24</td><td>12</td><td>418</td><td><a href="https://www.instagram.com/reel/DUYp1mGk2tc/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/607418255_18083308466515068_5440801182368413064_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=111&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=yMUxxjs4xIwQ7kNvwE8jkOS&amp;_nc_oc=Adq-kd-ewF1n1OwmbWVEcS2DnxtwvU_tAMIFqjNai-PZDA4UmUntSSr2gQklWTTvXN0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQEvqw0wueLQU7I31_HYw7ugogBg9R9qqHr38DEugXpJSPIyGORfdw0eVRkAYuYviQ-OzlLAYpMQLA&amp;oh=00_AfwA2uBaHUz744UUbrgvnRBwPFH8Tr8haLfY0hOTipUCfA&amp;oe=69C59FA2" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 29, 2025</td><td>592</td><td>7</td><td>343</td><td>942</td><td><a href="https://www.instagram.com/reel/DS23zXok3Tv/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/568311047_18076404185515068_8354890670563477120_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=stmgIIUJql0Q7kNvwFe8-YP&amp;_nc_oc=Adp1Q10puvAP3VHHGcNhQfwBb0-UjarW2rZNyW9B2CpXY2stWAVdePpzfLKnCv1ac4w&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQGeM-CdqdgB9h2D_DxIJpc858DzlZoDEshlVjD-GZufSJNm4We1ky2oDC_tK3qLgy_uma10kzszPg&amp;oh=00_AfxFhsClTqYM_RHyHfNwnwmT0mEYxVunPP5t1dLP6dJuCQ&amp;oe=69C597D5" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Oct 20, 2025</td><td>598</td><td>13</td><td>35</td><td>646</td><td><a href="https://www.instagram.com/reel/DQB9lY1E9eQ/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/651967428_918394064242190_6687311786010083994_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=104&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=FoJoxbApvnQQ7kNvwFyTy_m&amp;_nc_oc=AdoyCVjXZky3CeYXgI40DvkM8nwJ4WLHKIA4ILRmPGNxeI0Ur_neGhSSgRX_TQVRmEY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQH23yzYgnUBt5MDEKKVgaNIqm9p5jsl4Wa3re2LJIFnwlqdvNsUd6J9dxO-88ZHf2Fx2BZON1Wg4w&amp;oh=00_AfzPcxeoRt_2LK-_wPZbw3_LQLVyTEu73jlOY5svQq6itg&amp;oe=69C589C9" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 14, 2026</td><td>300</td><td>5</td><td>34</td><td>339</td><td><a href="https://www.instagram.com/reel/DV3QuYyk9rS/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/559156493_18074163113515068_6326978576973938059_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=LBjb5pg3E3AQ7kNvwFxXCYA&amp;_nc_oc=AdrsMvSpXAzRoLiAwIly69G0ERxfn3fKDeS9BwFxH55QOcqqwPvqATLlzAntX2rfDao&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQF3vyDVEjxsDoUp3hDsxj0VYmTgMY1l7WmQGYL3ygEs0cEQ1ng-iK3SR5nGSVm-kaaArVQFPMGWoQ&amp;oh=00_AfyLVkqHyRTamocSPLUoXbN-jbJmwfDBqkReEqfRnUD3Bg&amp;oe=69C590CB" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Sep 20, 2025</td><td>443</td><td>12</td><td>131</td><td>586</td><td><a href="https://www.instagram.com/reel/DO1OBB4EzKC/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/649902310_2396668144166029_6776603132355154883_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=104&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=C4pL6TnK9p0Q7kNvwEvTB90&amp;_nc_oc=Adoit3zMxnIftkARzxxe9MX_Zm4tIP9XPb2Kg_PnIT7jmsWW8hKKxy5tYui6zAXwUy8&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQFfNV7nDHDaYAF_KsbAYGRDqnnLPAYHT2z9AqV4iFxRKfr0bbI2gBT1GKjQ9aYFw9OSPx_BeNSDyA&amp;oh=00_AfzCGYGSC5vq3gdkN5uTaNrmnIYnYXxNhdn5jXypKLkVMg&amp;oe=69C580AC" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 11, 2026</td><td>269</td><td>0</td><td>47</td><td>316</td><td><a href="https://www.instagram.com/reel/DVwKNYWE4eU/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/618145132_18085250111515068_5850187364735842473_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=b2-XMlmTDUYQ7kNvwEdBRD7&amp;_nc_oc=AdoJUz8uug9hUDlUxV2CW0lzkMJmbLsLZ3C5aQPIDsO8S8AN25tCFLfMOBamVKrVBcM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQGGvGjUGztSmWx9FhOX0-j7wZMYF8DlcK9YUfCnMMBzu-RxgP9pwjvoVr94SIhrPZ2MO8nKyjy3qA&amp;oh=00_Afx8NS0XwDGPiutPAiBDVQ5AN_nQ1d9ry9zwAB8IBmJw7w&amp;oe=69C5A9B9" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 17, 2026</td><td>405</td><td>47</td><td>27</td><td>479</td><td><a href="https://www.instagram.com/reel/DTnmMcaE3a3/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/639511590_18088808381515068_1500883713435307871_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=100&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=FNat7gjkXMcQ7kNvwE1YU1f&amp;_nc_oc=AdoNICIgJvG5vFOTOdSASNNAkNmHQwRXrbavnAD4rycMP1somIUIaudGGxmosicH4zc&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQEjgZMSFFzpkUjdes4dXy5uzsJK3g7E_dIFrEmWYBPysJv5MrJIUOHHBd__e2KUdzIBQFKlQzMbTw&amp;oh=00_AfyXvUNz3FOVKDmZMGEzTyNFWEAF8qF03d8K3ynVVR_urA&amp;oe=69C59AE3" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 20, 2026</td><td>515</td><td>16</td><td>18</td><td>549</td><td><a href="https://www.instagram.com/reel/DU-_BFAE2kJ/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/621255226_18085825367515068_2719965711374267892_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=RDHAJaIL8QkQ7kNvwE7KhP4&amp;_nc_oc=Adqk-IHjGKgEX93ZG7GNO9o9zA-bw6TagdiT0rNZLiQocKgz_WGQz28AESANPhb7HLY&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQGIZUXfQR2faX3nicpV3PgE8VJgYCfJHNQA03BvLYY38mtt_yBp_0M-iHm_jIjXRgVwGzWYrxQK0Q&amp;oh=00_Afx5s2jUbQOkgch6E58R1HT0tGNdjXaE-61ImIJBgVL1sQ&amp;oe=69C57F1B" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 23, 2026</td><td>373</td><td>27</td><td>17</td><td>417</td><td><a href="https://www.instagram.com/reel/DT2_MPjE90o/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/602280219_18082382012515068_3490530672686406179_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=FQ9WecqZYI0Q7kNvwHiny81&amp;_nc_oc=AdpFf3BNqnlUQNeyXb0KgI5Sj38NRRJFcacka_UgIsKOfhVg678caEjyPkGXEjg_nSg&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQHI0ivQS6YCpeJDL2s5kZTj0ttyxI2Ojz9iuneLBRlOCeO609SZylnz0hGsxYWBBFxMoYz_CEwNNA&amp;oh=00_AfyZbtEPu47e6wTNcb0Af066A23DvkEFfUUB_4tv079KXA&amp;oe=69C5A287" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 20, 2025</td><td>225</td><td>3</td><td>17</td><td>245</td><td><a href="https://www.instagram.com/reel/DSfs37QkwQE/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/628541674_18088124039515068_8396567007726435780_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=1FEX8V1tpWQQ7kNvwG9wuaA&amp;_nc_oc=AdoWVz8z6FdZwGqLAn2k4k0re4bOz1X0Ejc8dt6jCgbvasbVLyTPXbJxHpi3bl223yk&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHniueu2IHbM7WXWOIPRjAZ31ZaKD6aovN5ThszR5QX6iJf-XP1FPAhMSj2MB3RpTrQzPyyIQf1Zw&amp;oh=00_AfzsNeJ4gbkTrSsmeGCh0vI8B9QiVDo6nFMZavjztGiR4A&amp;oe=69C5B2C3" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 14, 2026</td><td>166</td><td>9</td><td>4</td><td>179</td><td><a href="https://www.instagram.com/reel/DUusdf6EbfY/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/649079855_18090458138515068_1952478593195775986_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=zE3nuN7pH5wQ7kNvwELeaqe&amp;_nc_oc=AdpJWdw_fyepwEgXCMKWGWSiFrNlLu1SG4FVuyyYM722squXXrzDn4tg0f-97cXDzCI&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQFYTayENiJHSuj8RT9qfPW7fKiLeLlYmKATzSbQkNqIbCe1YjKrl-t5rQxh3fDs5j--InYjY5z0Kg&amp;oh=00_AfzYEru2RTaz82kMKR8xkLJ10I9jrtT7KsFtR3UV4nwmLA&amp;oe=69C59328" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 07, 2026</td><td>428</td><td>1</td><td>21</td><td>450</td><td><a href="https://www.instagram.com/reel/DVmFXG5k4Xz/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/627661638_879534188257513_5568701761446914372_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Vn3aundIHCUQ7kNvwGBSEHc&amp;_nc_oc=AdoWjDf9wy9EHfiudLnVLOVTrGRv1or3_rZ4h2P1LE8Gc1n_Hq4fnDZVHcraIrPZYbQ&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHt0vFK0pKp1CmRQEir528ogMJdZYQSQ2kdueC2eKvaVJaE7IK-uGpkwKxgmA4gnKvDCTFPxxaq-w&amp;oh=00_Afx617qPAMAtJ2eexNFD8gX2nnbDhYbrt4Vp75TLzLb4RQ&amp;oe=69C596CE" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 13, 2026</td><td>241</td><td>34</td><td>5</td><td>280</td><td><a href="https://www.instagram.com/reel/DUsrGsjE_Ll/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/609660121_18083981198515068_3001354098394771544_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=111&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Uv15xouoSFIQ7kNvwEHGpvR&amp;_nc_oc=AdoMLMV98-IDbXXx4guVK3cpgF9TV61mnIL8ipbUcRTz2kD1UR89fq9SnFqxDsFmJfE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQGzLAU9xqEAFSd4os42a5Rywu40vBS5QMlyEU2RlaqoP_vv5kj4Z_j9Xz9fV8nVPNYeTxbNlFO6FQ&amp;oh=00_AfzKP9vvxN8KOjBwHj7yc12my-biqobK_w7C6JLjeUV-rQ&amp;oe=69C58912" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 04, 2026</td><td>122</td><td>30</td><td>7</td><td>159</td><td><a href="https://www.instagram.com/reel/DTGNd85kwp9/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/630154461_18087449348515068_8850561474052468003_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=YX5Vjzfdo2AQ7kNvwFikPtX&amp;_nc_oc=AdrSJlWXpKODm8TGSXLGQrrtx0zdl2HOBrlQGKQthpLjs0EhcBtQZQvtKd3-5F_4mT0&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQEV4gUG6ATT_i5bfYCCSHnMGtfLil5MYLZc_CIKqSwuthSC5hx7ohw01lg2bXyFBmxeu_003s4QFA&amp;oh=00_AfwRGtPE0yrWyvZ86OvQqJfuXbxXnvdDVRkBhva60cLk7Q&amp;oe=69C583A5" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 07, 2026</td><td>113</td><td>8</td><td>4</td><td>125</td><td><a href="https://www.instagram.com/reel/DUdBzXFk6eR/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/589100994_18080821442515068_5260192795818810708_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=81E1s4Q6p6MQ7kNvwG4IydP&amp;_nc_oc=Adq5eW-ePC5EUkvOctnrW8i-xCXnmj3UKY0eyYM7xARBilvMqP3p9HcrNGwPoQV9G-8&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQHszhiXbpHqto9nmoNKdJeyQT5dVMyBoWEvFdfJSLJYtiVymQvGHYQ3ALMwqewL2FBtik_0FWWDOA&amp;oh=00_AfzNy5KKEPW0Y9RzqgNQ8cmBIV2C-JUuktxOcRO9UbBy1w&amp;oe=69C5AF32" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 05, 2025</td><td>182</td><td>34</td><td>16</td><td>232</td><td><a href="https://www.instagram.com/reel/DR4oEIPAfv-/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/612045217_18084537680515068_7221523446222377733_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=wqjTlnWTLGAQ7kNvwECjXQ9&amp;_nc_oc=Adrq2Z53HvYC_SHLe6frGu4Q9zTqDTnMGA-EIHTEfTtnbRaB4wyp6rmoF9psTtqP0sw&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQG6H9Y40Epc5qN7yxcKFQlCHsefUGyV3WQ-bWnacGzX5ifo2J5oM3DIBqenGZzZJjMl3JEP8qGC_Q&amp;oh=00_Afw8TALsD1LQwEsFAjO0V5tDRy5WEYWhUyRPmUfIfQobtg&amp;oe=69C59513" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 10, 2026</td><td>162</td><td>9</td><td>25</td><td>196</td><td><a href="https://www.instagram.com/reel/DTVRrXek15E/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/634518079_18088299446515068_2127388696320957339_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=EJ3voq5FoPwQ7kNvwFPPTbp&amp;_nc_oc=AdoJP_r_bxiFvrMXZKxOr1IXLE4l6gnmwOJ_wOdG3Rt19XmSyF9s-WR9HN-ESF_uPRI&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQHyViv_LD6adZDXY-h-X6K3jfu8NKrQ5l-hLQR3NKnaokNvZ_WXFyen2CL5A9FkEz6d22U2uivyFA&amp;oh=00_AfzvY7IqaNNigZkJKaqLjqEBBRpYO_BZOad4nr5Y0IBZwg&amp;oe=69C58231" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Feb 15, 2026</td><td>114</td><td>8</td><td>3</td><td>125</td><td><a href="https://www.instagram.com/reel/DUyQ7IYk83J/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/590402490_18080939603515068_3779163144644735359_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=bX7mUdMM4wgQ7kNvwFejOU6&amp;_nc_oc=Adouxs8eOYL5cgENELLjWeRln7hS72mL61VyiCpsYp40ARMffjyc4yOGsGVDBewQ72E&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQHEt2ncBidyvkChO_On98MW9j6jFrxwDvgBv8B7LviKQaE3dxxk9N5UqLwEMWynBdyuzFc4u3P7Ag&amp;oh=00_AfxP0YXZh3hExHvC5MQH_MxoCXGCpb27bRao9Er05rPF1Q&amp;oe=69C5AC83" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 06, 2025</td><td>162</td><td>2</td><td>5</td><td>169</td><td><a href="https://www.instagram.com/reel/DR7DwjKE0Zv/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/653713844_1412354050644418_6558797159208221062_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=111&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=-MQCiL84FBEQ7kNvwEuOTch&amp;_nc_oc=Adp01M8VZUsT8Tj3vEu5iWpeWWRC7aDPofckBGbLZ88EwpFLZtNu44prWtmpophfz5I&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQFUzk92koM-uIBaqFMgPAOVRVeeeMtM3TZjL_ptiDOX5hOanChOmfqSdH-dwAfcPN7lQ4eoCtHMMw&amp;oh=00_Afxiwv0nTIhA1lRoR82v88etuXTGnxaq8cSEnC5k0pVH6g&amp;oe=69C5A915" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 15, 2026</td><td>212</td><td>1</td><td>33</td><td>246</td><td><a href="https://www.instagram.com/reel/DV6cRGrE6Y5/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/590553327_18082589735515068_1836140798598127096_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=X_j7IrVL8doQ7kNvwG9-WuT&amp;_nc_oc=AdpTHDQSCnUvcmOQykI8dVujZJZ7IvP-52QstKRIXAxz_Zi5vFLEfR5cU--f6VpDl6o&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQGIFICtxcKsO5x5hkfP1T31-GdO2iZSSSkwftf9Wt0zoGSFBFRvF2287ydXDSOkUJd9Ax3wBHYSAA&amp;oh=00_AfycMdA9PuHLB84lKFk5H21-fFR0488BM98lQ70Mjo7GUw&amp;oe=69C5A134" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Dec 22, 2025</td><td>67</td><td>1</td><td>5</td><td>73</td><td><a href="https://www.instagram.com/reel/DSk3N-ekwP6/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/645575336_18089953616515068_7295819492693851339_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=108&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=830x9cynS8MQ7kNvwEBgH5M&amp;_nc_oc=AdoePBxqU1YQqJocto8zt8q9i5nlmcklnGDOIzJIu-4OGwPqbcO1dD53FnPXb14IY74&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQEPRKftlSmiND9IHEjLDyvXc2rhyjWm4MPO9RMuNAZF0XWVlbL9xn1rEwF9wqugahl-e0WoSdvHcQ&amp;oh=00_AfwmWclGG65ShPGdRpPglIoZGxlf1ExgOqFBaNxY54Vvuw&amp;oe=69C596A0" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 03, 2026</td><td>65</td><td>2</td><td>1</td><td>68</td><td><a href="https://www.instagram.com/reel/DVb0l5rE8D0/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/588205917_18080226326515068_5527401099818061357_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=Z8xuCAPjAdwQ7kNvwFW0CGb&amp;_nc_oc=Adp-9cux8jbstnIwaBiDBPTnmBwDyMtQCxOcBFKzQcXhWIBHNMyI1enSBYRLLoQqAwE&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQEQvomeNwMt1lhBxd4oaYC9-PsZo4tV9yqL5dCDxCYHzs2AYLpxM4zR3xY4qUADxfpoEk0-GhvUPw&amp;oh=00_AfyElkMVbzIVAU0gHY5reIZz8oy0uO2CeoyouIOvF4IoCA&amp;oe=69C5A8D9" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Nov 29, 2025</td><td>91</td><td>6</td><td>21</td><td>118</td><td><a href="https://www.instagram.com/reel/DRoyQIFDPR7/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.82787-15/653697710_18091948730515068_5363765772080299087_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=102&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=FIdWcXSsnVMQ7kNvwH6B8lH&amp;_nc_oc=AdpSQLJ8X0zwi0N1Qe8o0C88gkgUIcvXF1utjoyehj3wSOIWv17TiMHrVlQuVs7psPM&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGbSS3LDaKGx89lk63MNAU-LrTL-beIxB6G4P5pqzHiUSKDQcWVDWhZ29XkUA_C2nngkQYRilAsFA&amp;oh=00_AfzVxIvC0jkV1MZZ8Rv3Uph9GVGTwHGHkPK9PyjLivtD_A&amp;oe=69C5A93A" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 19, 2026</td><td>127</td><td>3</td><td>38</td><td>168</td><td><a href="https://www.instagram.com/reel/DWESDxPE51S/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/609164814_1217013253675063_9150446204614578744_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=5-rQQl_xl6oQ7kNvwENJoC1&amp;_nc_oc=Adr148EZ8GRB7gtNzA2UsuzlMkfHlYOLXIuqNUcKPu2PgfSHd0v3IUHqKOmpQsSfkDg&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=AvZDp9Xis6NnU15hCzXkCw&amp;_nc_tpa=Q5bMBQEiBB6_gVLbrcj_y1wZVgR-isA_3UD4np68GhUCV5wbWnkAMlRVLnjNXw6934ERzIkKjTUwiaeJMQ&amp;oh=00_Afy0HEvxy4AmYzR5uPd2QoDQW2gh_w3axi3COSMZsr3-Vg&amp;oe=69C585D8" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Jan 01, 2026</td><td>76</td><td>3</td><td>14</td><td>93</td><td><a href="https://www.instagram.com/reel/DS-PMNoE_Dg/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><img class="thumb" src="https://scontent.cdninstagram.com/v/t51.71878-15/650667149_916104387784863_6527318043982921633_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=106&amp;ccb=7-5&amp;_nc_sid=18de74&amp;efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&amp;_nc_ohc=RgurJq5ahNEQ7kNvwGkhM9P&amp;_nc_oc=AdrsptyAhgQindy4pCJJexSu80SY72PL1-hh1VjaEP4Bbf1wWEvaYsWq_dnjDI23wHQ&amp;_nc_zt=23&amp;_nc_ht=scontent.cdninstagram.com&amp;edm=AM6HXa8EAAAA&amp;_nc_gid=UYvYdba4ohwW779hVUfFyg&amp;_nc_tpa=Q5bMBQGzhf55ie_Pp6ODUgedQ3ImUXdvFVWOkx8xtOz3PwHR5eycbcVY8pHLDk7O7jJkc08iFYDULVgsjg&amp;oh=00_AfzeK3Qi8yD3Cu2BIkF2VnVwIzrBq-9_t-I-xYYSCFIhlw&amp;oe=69C580F8" alt="" loading="lazy" /></td><td>REELS · VIDEO</td><td>Mar 10, 2026</td><td>157</td><td>2</td><td>6</td><td>165</td><td><a href="https://www.instagram.com/reel/DVtdOwgkQsM/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-<tr><td><span class="thumb thumb-ph" aria-hidden="true"></span></td><td>FEED · IMAGE</td><td>Feb 08, 2026</td><td>23</td><td>0</td><td>0</td><td>23</td><td><a href="https://www.instagram.com/p/DUfLuG_E7Hy/" target="_blank" rel="noopener" class="table-link">View</a></td></tr>
-</tbody>
-        </table>
+      <div class="report-action">
+        <a class="btn-report" href="engagement_report.html" target="_blank" rel="noopener">View Detailed Engagement Report</a>
+        <span class="hint">Opens the full, detailed Instagram report in a new tab.</span>
       </div>
-    </main>
+    </section>
 
-    <aside class="side-panel">
-      <h2>How we calculate</h2>
-      <dl><dt>Interactions (per post)</dt><dd>Likes + comments + saves + shares. If Meta returns an <code>engagement</code> insight, that value is used instead.</dd><dt>Engagement rate vs followers</dt><dd>Total interactions ÷ follower count × 100 — common for comparing accounts of different sizes.</dd><dt>Sample engagement rate</dt><dd>Sum of interactions in this sample ÷ number of posts ÷ followers × 100 (headline KPI).</dd><dt>Top 5 by views</dt><dd>Top 5 uses reels from a wide account fetch, ranked by <strong>plays/views only</strong> (not engagement). KPI numbers use your most recent posts only (see report footnote).</dd></dl>
-      <p class="gen-footer">Report generated<br /><strong>Sunday, March 22, 2026 · 11:00 UTC</strong></p>
-    </aside>
-  </div>
+    <section class="card" id="contact-us">
+      <h2>Contact Us</h2>
+      <p>For collaborations, private training consultations, or strategic partnerships, please connect by email.</p>
+      <div class="contact-box">
+        Email: <a href="mailto:iamdoggopokko@gmail.com">iamdoggopokko@gmail.com</a>
+      </div>
+    </section>
+  </main>
 
-  <p class="footnote">Fetched 242 media items for ranking · Top 5 reels = highest views on account (from this fetch). Headline KPIs use your 50 most recent posts. Table shows 50 most recent. API: basic; media=242; insight backfill=472; views backfill=233.</p>
-
-  <script>
-    (function () {
-      var TOP5 = [{"rank":1,"engagement":166198,"thumbnail":"https://scontent.cdninstagram.com/v/t51.71878-15/502990139_4398349367059008_1746172061602107970_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=To_LnZlnwBkQ7kNvwFp1vYv&_nc_oc=Adr-1UZ8-Ds4tVzAD-BhpmTTCvKvkR8O0Ptn2Bns9-gbcGmc0il0OOYyE-4cUgZsXnM&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&_nc_tpa=Q5bMBQG4RdISFp4T5UstJQGRTlYzEfiSsew8BeI4LtCilgXqBdQiIbbOuk3w5mdyPUVdStI0EDhZFfjGaA&oh=00_AfzHWCBDIcQlt599HoL2rKsgR5JPFwHgRhFoKvKHP8-5JQ&oe=69C59E2C","permalink":"https://www.instagram.com/reel/C0zaQGHS1ba/","caption":"Whose fault is it according to you? I personally feel the dog’s personal space was hindered and the lady didn’t stop even when the dog signalled. We all need to respect the woofs and warnings! 🚨 Let’s keep it pawsitive! ✨  #dogsofinstagram #doglovers #puppylove #dogstagram #dogof","label":"REELS","posted_at":"2023-12-13T18:29:04+0000","posted_label":"Wednesday, December 13, 2023","relative_ago":"2 yr ago","video_views":5550184,"post_er_followers_pct":386.103,"post_er_reach_pct":null},{"rank":2,"engagement":27654,"thumbnail":"https://scontent.cdninstagram.com/v/t51.71878-15/491413896_691812423634833_5399170607179915060_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=PRpY-MUDBBkQ7kNvwFiJlj5&_nc_oc=AdpewmAzE7-iUnZA5VfbbXBBw-_LnkqZlOFLCi8hu-CLHeCml-nBpeIJqo7U2HsjdAc&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=mmp95XBWlS_hmH-CNz8XCA&_nc_tpa=Q5bMBQEIiqwa5b5hLcSn79zJPO9YDhtaOVRDCh6YNCy8DZ4mUndVlwxmavdWoQz6_jvAkTpu5tUoirGsdg&oh=00_AfzMcG4dVnJAad2CgTy3ApmsKeyAosmh8VtD0vJ-F2U14g&oe=69C586C1","permalink":"https://www.instagram.com/reel/C95Vl7GSuPO/","caption":"Preventing Dog Emergencies: Keeping Your Furry Friend Safe. Learn important tips to keep your dog safe and prevent them from ingesting harmful objects. Discover how to dog-proof your home, train your dog with key commands, and address boredom to avoid destructive behavior. Consul","label":"REELS","posted_at":"2024-07-26T18:27:37+0000","posted_label":"Friday, July 26, 2024","relative_ago":"1 yr ago","video_views":4732754,"post_er_followers_pct":64.244,"post_er_reach_pct":null},{"rank":3,"engagement":154899,"thumbnail":"https://scontent.cdninstagram.com/v/t51.71878-15/491422841_1401529094217930_6108067925967106841_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=Vo6qNPzCUd4Q7kNvwGyePr9&_nc_oc=AdoyB8nLZhuVmORES0S-CuF3t5J7Lroc6XtnOMZ5afNNcehPS70luaMKykI1vNx7YDw&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=OLyjyQuN1OjVPIbA3p9_XQ&_nc_tpa=Q5bMBQF59OtqKFidbX26pjafXhLUQBqZTiiPcoQiFbtePHkiFOkmaZhuF_UHSkUPi7YtE25J-5jGGpF09A&oh=00_AfwvvBYVOsMNozZawJb0HBcziyQp6ppuZHUNm4fvGbLiMQ&oe=69C58727","permalink":"https://www.instagram.com/reel/C0uQZDyyBNi/","caption":"Wondering what to do when your dog experiences seizures?  follow these steps -🐾 Stay calm during dog seizures. - 📹 Record the incident for the vet. - 🗣️ Comfort your pup with a soothing voice. - 🌊 Cool them down using a wet towel. - ⏰ If seizures last over 5 minutes, rush to the ","label":"REELS","posted_at":"2023-12-11T18:30:03+0000","posted_label":"Monday, December 11, 2023","relative_ago":"2 yr ago","video_views":2705913,"post_er_followers_pct":359.854,"post_er_reach_pct":null},{"rank":4,"engagement":76001,"thumbnail":"https://scontent.cdninstagram.com/v/t51.75761-15/480714753_18048988871515068_7087910106734943182_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=xUDqoupHD9kQ7kNvwHAYmzj&_nc_oc=Adomos6hdnGZN894NXo_Jq1DEB7OZ0lDJhiJ3mXNeHsKf4PHDeEfX48f3R9EGzcelbU&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=LC6JoiJQkIU4fj3NTdhvzA&_nc_tpa=Q5bMBQFVN9BXeJwQYJqzj7g7lTv7wuMWABVH2shVo4uorjHBgA5EcmF8Jpf99E59NKH-P1t2mHocV1HKsw&oh=00_Afwyziki95UHqWwjkbRpbf8MMh_UEXFfQ46DXWzrsBakKA&oe=69C5A78D","permalink":"https://www.instagram.com/reel/DGLlXAIMRE5/","caption":"What Your Dog’s Vomit is Telling You About Their Health ? We discuss how the color and consistency of a dog’s vomit can provide important insights into their health. Yellow vomit may indicate bile issues or irregular meals, white vomit could signal acid reflux or liver problems, ","label":"REELS","posted_at":"2025-02-17T16:44:21+0000","posted_label":"Monday, February 17, 2025","relative_ago":"1 yr ago","video_views":2448486,"post_er_followers_pct":176.562,"post_er_reach_pct":null},{"rank":5,"engagement":65506,"thumbnail":"https://scontent.cdninstagram.com/v/t51.71878-15/505497444_698067366182959_74148366761806594_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=Nc4n2_bOTeYQ7kNvwH97l_8&_nc_oc=AdpavSclB4AGD5waDojXqLFvzEvllwuzKnDxgau3onYLZIvDjq-SQ2MiHjCWdX579Kg&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=mmp95XBWlS_hmH-CNz8XCA&_nc_tpa=Q5bMBQHj9xtCX0ofaOJgap25QB473vpvJqxSGafTdW6pT2Bgjy9f2cvE-8H4MhqNItF8C--zS5EB37o02g&oh=00_AfyC1By3YgK5XjJ1KGDYT_DaxsO-RmfYtdFIJqDg3uHHXw&oe=69C5835F","permalink":"https://www.instagram.com/reel/C_YYZ_Gscxd/","caption":"Tragic Rabies Death Highlights Importance of Prompt Action After Dog Bites. We discuss the tragic case of a 21-year-old girl who died of rabies, despite receiving treatment. The importance of immediate action after a dog bite is emphasized - washing the wound thoroughly and getti","label":"REELS","posted_at":"2024-09-01T16:19:05+0000","posted_label":"Sunday, September 01, 2024","relative_ago":"1 yr ago","video_views":1885264,"post_er_followers_pct":152.18,"post_er_reach_pct":null}];
-      var sel = document.getElementById("top5sel");
-      var img = document.getElementById("top5img");
-      var eng = document.getElementById("top5eng");
-      var cap = document.getElementById("top5cap");
-      var link = document.getElementById("top5link");
-      var dateEl = document.getElementById("top5date");
-      var viewsEr = document.getElementById("top5viewsEr");
-      function show(i) {
-        if (!TOP5.length) {
-          dateEl.textContent = "";
-          viewsEr.textContent = "";
-          eng.textContent = "No Reels / videos in this sample";
-          cap.textContent = "";
-          link.href = "#";
-          img.removeAttribute("src");
-          return;
-        }
-        var p = TOP5[i];
-        var dateBits = [];
-        if (p.posted_label) dateBits.push("Uploaded " + p.posted_label + " (UTC)");
-        if (p.relative_ago) dateBits.push(p.relative_ago);
-        dateEl.textContent = dateBits.join(" · ");
-        var metaParts = [];
-        if (p.video_views && p.video_views > 0) metaParts.push(Number(p.video_views).toLocaleString() + " plays/views");
-        if (p.post_er_reach_pct != null) metaParts.push("ER vs reach: " + p.post_er_reach_pct + "%");
-        if (p.post_er_followers_pct != null) metaParts.push("ER vs followers: " + p.post_er_followers_pct + "%");
-        viewsEr.textContent = metaParts.join(" · ");
-        eng.textContent = Number(p.engagement).toLocaleString() + " engagements";
-        cap.textContent = p.caption || "(no caption)";
-        link.href = p.permalink || "#";
-        img.src = p.thumbnail || "";
-        img.alt = "Thumbnail";
-      }
-      TOP5.forEach(function (p, idx) {
-        var o = document.createElement("option");
-        var v = (p.video_views && p.video_views > 0) ? (Number(p.video_views).toLocaleString() + " views · ") : "";
-        o.value = String(idx);
-        o.textContent = "#" + (idx + 1) + " — " + v + Number(p.engagement).toLocaleString() + " eng. (" + (p.label || "video") + ")";
-        sel.appendChild(o);
-      });
-      sel.addEventListener("change", function () { show(Number(sel.value)); });
-      show(0);
-    })();
-  </script>
+  <footer>Doggo Pokko · Built for awareness, training, and responsible dog parenting.</footer>
 </body>
 </html>
